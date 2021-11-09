@@ -1,0 +1,1 @@
+export const BOUDNRY_THICKNESS = 60
