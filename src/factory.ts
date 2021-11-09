@@ -1,6 +1,6 @@
 import * as PixiMatter from '../libs/pixi-matter'
 import { Resolution } from './types/common'
-import Matter from 'matter-js';
+import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
 import { BOUDNRY_THICKNESS } from './constants';
@@ -15,8 +15,9 @@ export class GameFactory {
     }
 
     createPlayer(width: number, height: number) {
-        const options = { // TODO: Doesn't work
+        const options: IChamferableBodyDefinition = { // TODO: Doesn't work
             density: .025,
+            restitution: 0,
             render: {
                 fillStyle: 'red',
                 strokeStyle: 'blue',
@@ -37,18 +38,20 @@ export class GameFactory {
     }
 
     createWalls() {
-        const options = { isStatic: true }
-        Matter.World.add(this.binder.mWorld, [
-			Matter.Bodies.rectangle(BOUDNRY_THICKNESS / 2, this.resolution.height / 2, BOUDNRY_THICKNESS, this.resolution.height, options),
-		]);
-		Matter.World.add(this.binder.mWorld, [
-			Matter.Bodies.rectangle(this.resolution.width - BOUDNRY_THICKNESS / 2, this.resolution.height / 2, BOUDNRY_THICKNESS, this.resolution.height, options),
-		]);
+        const options: IChamferableBodyDefinition = { isStatic: true, restitution: 1 }
+        const leftWall = Matter.Bodies.rectangle(BOUDNRY_THICKNESS / 2, this.resolution.height / 2, BOUDNRY_THICKNESS, this.resolution.height, options)
+        const rightWall = Matter.Bodies.rectangle(this.resolution.width - BOUDNRY_THICKNESS / 2, this.resolution.height / 2, BOUDNRY_THICKNESS, this.resolution.height, options)
+        leftWall.restitution = .99
+        rightWall.restitution = .99
+        Matter.World.add(this.binder.mWorld, [leftWall, rightWall]);
     }
 
     createGround() {
         Matter.World.add(this.binder.mWorld, [
-			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - BOUDNRY_THICKNESS / 2, this.resolution.width, BOUDNRY_THICKNESS, { isStatic: true }),
+			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - BOUDNRY_THICKNESS / 2, this.resolution.width, BOUDNRY_THICKNESS, {
+                isStatic: true,
+                restitution: 0
+            }),
 		]);
     }
 }
