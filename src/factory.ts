@@ -16,6 +16,7 @@ export class GameFactory {
 
     createPlayer(width: number, height: number) {
         const options = { // TODO: Doesn't work
+            density: .025,
             render: {
                 fillStyle: 'red',
                 strokeStyle: 'blue',
