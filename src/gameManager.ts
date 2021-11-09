@@ -17,6 +17,7 @@ export class GameManager {
     initializeGame() {
         this.initBoundry()
         this.initPlayer()
+        this.initBoxes()
     }
 
     initBoundry() {
@@ -25,5 +26,9 @@ export class GameManager {
 
     initPlayer() {
         this.factory.createPlayer(20, 35)
+    }
+
+    initBoxes() {
+        this.factory.createBoxes()
     }
 }
