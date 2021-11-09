@@ -22,16 +22,16 @@ export class PlayerController extends ECS.Component {
 	}
 
 	moveLeft() {
-		Matter.Body.setVelocity(this.playerBody, { x: -3, y: 0 })
+		Matter.Body.setVelocity(this.playerBody, { x: -2, y: 0 })
 	}
 
 	moveRight() {
-		Matter.Body.setVelocity(this.playerBody, { x: 3, y: 0 })
+		Matter.Body.setVelocity(this.playerBody, { x: 2, y: 0 })
 	}
 
 	jump() {
 		const jumpPower = calculateJumpPower(this.playerJump)
-		const jumpVector = Matter.Vector.normalise(Matter.Vector.create(this.playerJump.jumpDirection * 0.4, -1))
+		const jumpVector = Matter.Vector.normalise(Matter.Vector.create(this.playerJump.jumpDirection * 0.2, -1))
 		Matter.Body.applyForce(this.playerBody, {
 			x: this.playerBody.position.x,
 			y: this.playerBody.position.y
