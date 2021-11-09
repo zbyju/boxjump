@@ -15,7 +15,17 @@ export class GameFactory {
     }
 
     createPlayer(width: number, height: number) {
-        const playerBody = Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - BOUDNRY_THICKNESS, width, height)
+        const options = { // TODO: Doesn't work
+            render: {
+                fillStyle: 'red',
+                strokeStyle: 'blue',
+                lineWidth: 3
+           }
+        }
+        const playerBody = Matter.Bodies.rectangle(
+            this.resolution.width / 2, this.resolution.height - BOUDNRY_THICKNESS,
+            width, height, options
+        )
 		const playerContainer: ECS.Container = this.binder.addBody(playerBody)
 		playerContainer.addComponent(new PlayerController(playerBody))
     }
