@@ -18,6 +18,8 @@ export class GameFactory {
         const options: IChamferableBodyDefinition = { // TODO: Doesn't work
             density: .025,
             restitution: 0,
+            friction: 1,
+            inertia: Infinity,
             render: {
                 fillStyle: 'red',
                 strokeStyle: 'blue',

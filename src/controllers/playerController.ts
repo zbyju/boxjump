@@ -22,17 +22,11 @@ export class PlayerController extends ECS.Component {
 	}
 
 	moveLeft() {
-		Matter.Body.setPosition(this.playerBody, {
-			x: this.playerBody.position.x - 5,
-			y: this.playerBody.position.y
-		})
+		Matter.Body.setVelocity(this.playerBody, { x: -3, y: 0 })
 	}
 
 	moveRight() {
-		Matter.Body.setPosition(this.playerBody, {
-			x: this.playerBody.position.x + 5,
-			y: this.playerBody.position.y
-		})
+		Matter.Body.setVelocity(this.playerBody, { x: 3, y: 0 })
 	}
 
 	jump() {
