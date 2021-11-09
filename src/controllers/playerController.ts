@@ -23,6 +23,15 @@ export class PlayerController extends ECS.Component {
 		})
 	}
 
+	jump() {
+		Matter.Body.applyForce(this.playerBody, {
+			x: this.playerBody.position.x,
+			y: this.playerBody.position.y
+		}, {
+			x: 0, y: -0.005
+		})
+	}
+
 	onUpdate(delta: number, absolute: number) {
 		const keyInputComponent = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name)
 
@@ -31,6 +40,9 @@ export class PlayerController extends ECS.Component {
 		}
 		if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT)) {
 			this.moveRight()
+		}
+		if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_SPACE)) {
+			this.jump()
 		}
 	}
 }
