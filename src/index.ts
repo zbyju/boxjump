@@ -4,7 +4,7 @@ import Matter from 'matter-js';
 import * as PixiMatter from '../libs/pixi-matter'
 import { interactiveTarget } from 'pixi.js';
 import { PlayerController } from './controllers/playerController';
-import { GameManager } from './GameManager';
+import { GameManager } from './gameManager';
 
 class ProjectJumper {
 	engine: ECS.Engine;
