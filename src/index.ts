@@ -5,6 +5,7 @@ import * as PixiMatter from '../libs/pixi-matter'
 import { interactiveTarget } from 'pixi.js';
 import { PlayerController } from './controllers/playerController';
 import { GameManager } from './gameManager';
+import { GRAVITY_X, GRAVITY_Y } from './constants';
 
 class ProjectJumper {
 	engine: ECS.Engine;
@@ -32,6 +33,9 @@ class ProjectJumper {
 			renderConstraints: true,
 			renderAngles: false
 		})
+
+		this.binder.mEngine.gravity.x = GRAVITY_X
+		this.binder.mEngine.gravity.y = GRAVITY_Y
 	}
 
 	onAssetsLoaded() {

@@ -3,6 +3,7 @@ import Matter from 'matter-js';
 import { JumpDirection, PlayerJump, PlayerState } from '../types/player'
 import { getDefaultJump } from '../default/playerDefaults';
 import { calculateJumpPower } from '../utils/player';
+import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body
@@ -20,25 +21,27 @@ export class PlayerController extends ECS.Component {
 		this.speed = 0
 		this.playerJump = getDefaultJump()
 	}
-
-	moveLeft() {
-		Matter.Body.setVelocity(this.playerBody, { x: -2, y: 0 })
+	calcMoveSpeed(delta: number) {
+		return MOVE_SPEED * delta * SPEED
+	}
+	moveLeft(delta: number) {
+		Matter.Body.setVelocity(this.playerBody, { x: -this.calcMoveSpeed(delta), y: 0 })
 	}
 
-	moveRight() {
-		Matter.Body.setVelocity(this.playerBody, { x: 2, y: 0 })
+	moveRight(delta: number) {
+		Matter.Body.setVelocity(this.playerBody, { x: this.calcMoveSpeed(delta), y: 0 })
 	}
 
-	jump() {
+	jump(delta: number) {
 		const jumpPower = calculateJumpPower(this.playerJump)
-		const jumpVector = Matter.Vector.normalise(Matter.Vector.create(this.playerJump.jumpDirection * 0.2, -1))
+		const jumpVector = Matter.Vector.normalise(Matter.Vector.create(this.playerJump.jumpDirection * JUMP_X, -1 * JUMP_Y))
 		Matter.Body.applyForce(this.playerBody, {
 			x: this.playerBody.position.x,
 			y: this.playerBody.position.y
-		}, Matter.Vector.mult(jumpVector, jumpPower))
+		}, Matter.Vector.mult(jumpVector, jumpPower * JUMP_POWER * delta * SPEED))
 	}
 
-	updateState() {
+	updateState(delta: number) {
 		Matter.Body.setAngle(this.playerBody, 0)
 		// If started flying then player has no control
 		if(Math.abs(this.lastPosition.y - this.playerBody.position.y) > 0.01) {
@@ -74,16 +77,16 @@ export class PlayerController extends ECS.Component {
 					this.playerJump.jumpDirection= JumpDirection.UP
 				}
 				this.playerJump.jumpEnd = Date.now()
-				this.jump()
+				this.jump(delta)
 			}
 			//Else check if move
 			if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT)) {
 				this.playerState = PlayerState.RUNNING_RIGHT
-				this.moveRight()
+				this.moveRight(delta)
 			}
 			if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_LEFT)) {
 				this.playerState = PlayerState.RUNNING_LEFT
-				this.moveLeft()
+				this.moveLeft(delta)
 			}
 		}
 	}
@@ -93,7 +96,7 @@ export class PlayerController extends ECS.Component {
 	}
 
 	onUpdate(delta: number, absolute: number) {
-		this.updateState()
+		this.updateState(delta)
 		this.updateLastState()
 	}
 }

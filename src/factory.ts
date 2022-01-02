@@ -3,7 +3,7 @@ import { Resolution } from './types/common'
 import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
-import { BOUDNRY_THICKNESS } from './constants';
+import { BOUDNRY_THICKNESS, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind
@@ -14,24 +14,22 @@ export class GameFactory {
         this.resolution = resolution
     }
 
-    createPlayer(width: number, height: number) {
+    createPlayer() {
+        console.log(PLAYER_DENSITY)
         const options: IChamferableBodyDefinition = { // TODO: Doesn't work
-            density: .025,
-            restitution: 0,
-            friction: 1,
-            inertia: Infinity,
-            render: {
-                fillStyle: 'red',
-                strokeStyle: 'blue',
-                lineWidth: 3
-           }
+            density: PLAYER_DENSITY,
+            restitution: PLAYER_RESTITUTION,
+            friction: PLAYER_FRICTION,
+            frictionAir: PLAYER_FRICTION_AIR,
+            inertia: PLAYER_INERTIA,
         }
         const playerBody = Matter.Bodies.rectangle(
-            this.resolution.width / 2, this.resolution.height - BOUDNRY_THICKNESS,
-            width, height, options
+            this.resolution.width / 2, this.resolution.height - WALL_WIDTH,
+            PLAYER_WIDTH, PLAYER_HEIGHT, options
         )
 		const playerContainer: ECS.Container = this.binder.addBody(playerBody)
 		playerContainer.addComponent(new PlayerController(playerBody))
+        playerContainer.addChild(new ECS.Graphics().beginFill(0xFFFFFF).drawRect(-PLAYER_WIDTH / 2, - PLAYER_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT))
     }
 
     createBoundry() {
@@ -41,16 +39,16 @@ export class GameFactory {
 
     createWalls() {
         const options: IChamferableBodyDefinition = { isStatic: true, restitution: 1, friction: 1 }
-        const leftWall = Matter.Bodies.rectangle(BOUDNRY_THICKNESS / 2, this.resolution.height / 2, BOUDNRY_THICKNESS, this.resolution.height, options)
-        const rightWall = Matter.Bodies.rectangle(this.resolution.width - BOUDNRY_THICKNESS / 2, this.resolution.height / 2, BOUDNRY_THICKNESS, this.resolution.height, options)
-        leftWall.restitution = .99
-        rightWall.restitution = .99
+        const leftWall = Matter.Bodies.rectangle(WALL_WIDTH / 2, this.resolution.height / 2, WALL_WIDTH, this.resolution.height, options)
+        const rightWall = Matter.Bodies.rectangle(this.resolution.width - WALL_WIDTH / 2, this.resolution.height / 2, WALL_WIDTH, this.resolution.height, options)
+        leftWall.restitution = WALL_RESTITUTION
+        rightWall.restitution = WALL_RESTITUTION
         Matter.World.add(this.binder.mWorld, [leftWall, rightWall]);
     }
 
     createGround() {
         Matter.World.add(this.binder.mWorld, [
-			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - BOUDNRY_THICKNESS / 2, this.resolution.width, BOUDNRY_THICKNESS, {
+			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - WALL_WIDTH / 2, this.resolution.width, WALL_WIDTH, {
                 isStatic: true,
                 restitution: 0,
                 friction: 1
