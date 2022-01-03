@@ -3,7 +3,7 @@ import { Resolution } from './types/common'
 import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
-import { BOUDNRY_THICKNESS, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_RESTITUTION, WALL_WIDTH } from './constants';
+import { GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind
@@ -16,7 +16,7 @@ export class GameFactory {
 
     createPlayer() {
         console.log(PLAYER_DENSITY)
-        const options: IChamferableBodyDefinition = { // TODO: Doesn't work
+        const options: IChamferableBodyDefinition = {
             density: PLAYER_DENSITY,
             restitution: PLAYER_RESTITUTION,
             friction: PLAYER_FRICTION,
@@ -24,7 +24,7 @@ export class GameFactory {
             inertia: PLAYER_INERTIA,
         }
         const playerBody = Matter.Bodies.rectangle(
-            this.resolution.width / 2, this.resolution.height - WALL_WIDTH,
+            this.resolution.width / 2, this.resolution.height - GROUND_WIDTH - 2,
             PLAYER_WIDTH, PLAYER_HEIGHT, options
         )
 		const playerContainer: ECS.Container = this.binder.addBody(playerBody)
@@ -48,7 +48,7 @@ export class GameFactory {
 
     createGround() {
         Matter.World.add(this.binder.mWorld, [
-			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - WALL_WIDTH / 2, this.resolution.width, WALL_WIDTH, {
+			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - GROUND_WIDTH, this.resolution.width, GROUND_WIDTH, {
                 isStatic: true,
                 restitution: 0,
                 friction: 1
@@ -57,7 +57,7 @@ export class GameFactory {
     }
 
     createBoxes() {
-        const options: IChamferableBodyDefinition = { isStatic: true, restitution: 1 }
+        const options: IChamferableBodyDefinition = { isStatic: true, restitution: 1, friction: 0 }
         const box1 = Matter.Bodies.rectangle(130, 400, 60, 20, options)
         const box2 = Matter.Bodies.rectangle(140, 300, 60, 20, options)
         const box3 = Matter.Bodies.rectangle(430, 200, 60, 20, options)

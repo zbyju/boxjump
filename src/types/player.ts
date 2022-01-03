@@ -12,6 +12,11 @@ export enum JumpDirection {
     RIGHT = 1,
 }
 
+export type PlayerPosition = {
+    x: number;
+    y: number;
+}
+
 export type PlayerJump = {
     jumpStart: number | null,
     jumpEnd: number | null,
