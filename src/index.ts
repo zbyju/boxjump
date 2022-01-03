@@ -36,6 +36,8 @@ class ProjectJumper {
 
 		this.binder.mEngine.gravity.x = GRAVITY_X
 		this.binder.mEngine.gravity.y = GRAVITY_Y
+		// @ts-ignore - Resolver exists, not defined in TS - this fixes walls being "sticky"
+		Matter.Resolver._restingThresh = 0.001;
 	}
 
 	onAssetsLoaded() {

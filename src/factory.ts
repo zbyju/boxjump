@@ -3,7 +3,7 @@ import { Resolution } from './types/common'
 import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
-import { GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_RESTITUTION, WALL_WIDTH } from './constants';
+import { GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind
@@ -38,7 +38,7 @@ export class GameFactory {
     }
 
     createWalls() {
-        const options: IChamferableBodyDefinition = { isStatic: true, restitution: 1, friction: 1 }
+        const options: IChamferableBodyDefinition = { isStatic: true, restitution: WALL_RESTITUTION, friction: WALL_FRICTION }
         const leftWall = Matter.Bodies.rectangle(WALL_WIDTH / 2, this.resolution.height / 2, WALL_WIDTH, this.resolution.height, options)
         const rightWall = Matter.Bodies.rectangle(this.resolution.width - WALL_WIDTH / 2, this.resolution.height / 2, WALL_WIDTH, this.resolution.height, options)
         leftWall.restitution = WALL_RESTITUTION
@@ -50,14 +50,14 @@ export class GameFactory {
         Matter.World.add(this.binder.mWorld, [
 			Matter.Bodies.rectangle(this.resolution.width / 2, this.resolution.height - GROUND_WIDTH, this.resolution.width, GROUND_WIDTH, {
                 isStatic: true,
-                restitution: 0,
-                friction: 1
+                restitution: GROUND_RESTITUION,
+                friction: GROUND_FRICTION
             }),
 		]);
     }
 
     createBoxes() {
-        const options: IChamferableBodyDefinition = { isStatic: true, restitution: 1, friction: 0 }
+        const options: IChamferableBodyDefinition = { isStatic: true, restitution: 0.7, friction: 0 }
         const box1 = Matter.Bodies.rectangle(130, 400, 60, 20, options)
         const box2 = Matter.Bodies.rectangle(140, 300, 60, 20, options)
         const box3 = Matter.Bodies.rectangle(430, 200, 60, 20, options)
