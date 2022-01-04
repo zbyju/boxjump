@@ -30,8 +30,8 @@ class ProjectJumper {
 
 		this.binder.init(this.engine.scene, {
 			mouseControl: false,
-			renderConstraints: true,
-			renderAngles: false
+			renderConstraints: false,
+			renderAngles: false,
 		})
 
 		this.binder.mEngine.gravity.x = GRAVITY_X
@@ -42,8 +42,10 @@ class ProjectJumper {
 
 	onAssetsLoaded() {
 		let scene: ECS.Scene = this.engine.scene;
+		let gm = new GameManager(this.engine, this.binder)
 		scene.addGlobalComponent(new ECS.KeyInputComponent())
-		new GameManager(this.engine, this.binder).initializeGame()
+		scene.addGlobalComponent(gm)
+		gm.initializeGame()
 	}
 }
 
