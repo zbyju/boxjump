@@ -17,7 +17,7 @@ export const PLAYER_BORDER_THICKNESS = 1
 
 //Player Physics Params
 export const PLAYER_DENSITY = 0.010
-export const PLAYER_RESTITUTION = 0.05
+export const PLAYER_RESTITUTION = 0.1
 export const PLAYER_FRICTION = 0.1
 export const PLAYER_FRICTION_AIR = 0
 export const PLAYER_INERTIA = Infinity
