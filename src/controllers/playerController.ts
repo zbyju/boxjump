@@ -5,6 +5,8 @@ import { getDefaultJump } from '../default/playerDefaults';
 import { calculateJumpPower } from '../utils/player';
 import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
 import PositionQueue from '../utils/positionQueue';
+import { Resolution } from '../types/common';
+import { Level } from '../levels/level';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body
@@ -12,12 +14,14 @@ export class PlayerController extends ECS.Component {
 	playerJump: PlayerJump
 	speed: number
 	positionQueue: PositionQueue
+	resolution: Resolution
 
-	constructor(playerBody: Matter.Body) {
+	constructor(playerBody: Matter.Body, resolution: Resolution) {
 		super()
 		this.playerBody = playerBody
 		this.positionQueue = new PositionQueue()
 		this.playerState = PlayerState.STANDING
+		this.resolution = resolution
 
 		this.speed = 0
 		this.playerJump = getDefaultJump()
@@ -93,6 +97,32 @@ export class PlayerController extends ECS.Component {
 				this.playerJump.jumpEnd = Date.now()
 				this.jump(delta)
 			}
+			if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_P)) {
+				const level: Level = this.scene.getGlobalAttribute("level")
+				Matter.Body.setPosition(this.playerBody, {x: level.playerEnd.width, y: level.playerEnd.height})
+			}
+			if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_L)) {
+				const level: Level = this.scene.getGlobalAttribute("level")
+				Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
+			}
+		}
+	}
+
+	updateLevel() {
+		//Update to next level
+		if(this.playerBody.position.y < 0) {
+			this.sendMessage("nextlevel")
+			Matter.Body.setPosition(this.playerBody, {
+				x: this.playerBody.position.x,
+				y: this.playerBody.position.y + this.resolution.height
+			})
+		}
+		if(this.playerBody.bounds.min.y > this.resolution.height) {
+			this.sendMessage("prevlevel")
+			Matter.Body.setPosition(this.playerBody, {
+				x: this.playerBody.position.x,
+				y: this.playerBody.position.y - this.resolution.height
+			})
 		}
 	}
 
@@ -103,5 +133,6 @@ export class PlayerController extends ECS.Component {
 	onUpdate(delta: number, absolute: number) {
 		this.updatePositionQueue()
 		this.updateState(delta)
+		this.updateLevel()
 	}
 }
