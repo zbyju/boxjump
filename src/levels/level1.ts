@@ -1,9 +1,14 @@
 import { Body } from "matter-js";
 import { BoxFactory } from "../factory/boxFactory";
+import { BoxLeftFactory } from "../factory/boxLeftFactory";
+import { BoxRightFactory } from "../factory/boxRightFactory";
+import { Box } from "../objects/box";
 import { Resolution } from "../types/common";
 import { Level } from "./level";
+import { Level2 } from "./level2";
 
 export class Level1 extends Level {
+    boxes: Box[];
     name: string = "1"
     playerStart: Resolution;
     playerEnd: Resolution;
@@ -13,23 +18,28 @@ export class Level1 extends Level {
         this.playerStart = {width: this.resolution.width / 2, height: this.resolution.height - 10}
         this.playerEnd = {width: this.resolution.width / 8, height: this.resolution.height / 7.5 - 10}
 
-        const bf = new BoxFactory(this.resolution) 
+        const bfl = new BoxLeftFactory(this.resolution) 
+        const bfr = new BoxRightFactory(this.resolution) 
                
-        this.boxes =[
-            bf.createBox(this.resolution.width / 2, this.resolution.height - 2, this.resolution.width, 2),
-            bf.createBox(this.resolution.width - 125, this.resolution.height - 75, 250, 150),
-            bf.createBox(125, this.resolution.height - 75, 250, 150),
+        this.boxes = [
+            bfl.createBox(0, this.resolution.height, this.resolution.width, 2),
+            bfl.createBox(0, this.resolution.height, 250, 150),
+            bfr.createBox(0, this.resolution.height, 250, 150),
 
-            bf.createMDBox(this.resolution.width / 3.2, this.resolution.height / 1.6),
-            bf.createMDBox(60, this.resolution.height / 2.4),
-            bf.createMDBox(this.resolution.width / 2, this.resolution.height / 3),
-            bf.createSMBox(this.resolution.width / 8, this.resolution.height / 7.5),
-            bf.createSMBox(this.resolution.width / 8 * 7, this.resolution.height / 7.5),
+            bfl.createMDBox(185, this.resolution.height - 220),
+            bfl.createMDBox(0, this.resolution.height / 2.4),
+            bfl.createSMBox(this.resolution.width / 2, this.resolution.height / 3),
+            bfr.createSMBox(this.resolution.width / 2, this.resolution.height / 3),
+            bfl.createSMBox(60, this.resolution.height / 7.5),
+            bfr.createSMBox(60, this.resolution.height / 7.5),
         ]
     }
 
-    getBoxes(): Body[] {
-        return this.boxes
+    getNextLevel(): Level | null {
+        return new Level2(this.resolution)
     }
 
+    getPrevLevel(): Level | null {
+        return null
+    }
 }
