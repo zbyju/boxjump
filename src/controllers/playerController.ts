@@ -105,6 +105,16 @@ export class PlayerController extends ECS.Component {
 				const level: Level = this.scene.getGlobalAttribute("level")
 				Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
 			}
+			if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_O)) {
+				this.sendMessage("nextlevel")
+				const level: Level = this.scene.getGlobalAttribute("level")
+				Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
+			}
+			if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_K)) {
+				this.sendMessage("prevlevel")
+				const level: Level = this.scene.getGlobalAttribute("level")
+				Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
+			}
 		}
 	}
 
