@@ -6,6 +6,7 @@ import { Level1 } from "./levels/level1";
 import Matter from "matter-js";
 import { Level } from "./levels/level";
 import { Level2 } from "./levels/level2";
+import { Box } from "./objects/box";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;
@@ -13,7 +14,7 @@ export class GameManager extends ECS.Component {
     factory: GameFactory
     player: Matter.Body
     walls: Array<Matter.Body>
-    boxes: Array<Matter.Body>
+    boxes: Array<Box>
 
     constructor(engine: ECS.Engine, binder: PixiMatter.MatterBind) {
         super()
@@ -28,25 +29,29 @@ export class GameManager extends ECS.Component {
 
     onMessage(msg: ECS.Message) {
         if(msg.action == "nextlevel") {
+            const level: Level = this.engine.scene.getGlobalAttribute("level")
+            const nextLevel = level.getNextLevel()
+            if(nextLevel == null) return
             this.boxes.forEach(b => {
-                Matter.World.remove(this.binder.mWorld, b)
+                Matter.World.remove(this.binder.mWorld, b.box)
                 
-                const pixi = this.binder.findSyncObjectForBody(b)
+                const pixi = this.binder.findSyncObjectForBody(b.box)
                 if(pixi) pixi.destroy()
             })
-            const level2: Level = new Level2(getResolutionFromEngine(this.engine))
-            this.engine.scene.assignGlobalAttribute("level", level2)
+            this.engine.scene.assignGlobalAttribute("level", nextLevel)
     
             this.boxes = this.initBoxes()
         } else if(msg.action == "prevlevel") {
+            const level: Level = this.engine.scene.getGlobalAttribute("level")
+            const prevLevel = level.getPrevLevel()
+            if(prevLevel == null) return
             this.boxes.forEach(b => {
-                Matter.World.remove(this.binder.mWorld, b)
+                Matter.World.remove(this.binder.mWorld, b.box)
                 
-                const pixi = this.binder.findSyncObjectForBody(b)
+                const pixi = this.binder.findSyncObjectForBody(b.box)
                 if(pixi) pixi.destroy()
             })
-            const level1: Level = new Level1(getResolutionFromEngine(this.engine))
-            this.engine.scene.assignGlobalAttribute("level", level1)
+            this.engine.scene.assignGlobalAttribute("level", prevLevel)
     
             this.boxes = this.initBoxes()
         }
