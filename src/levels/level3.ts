@@ -3,13 +3,14 @@ import { BoxCenterFactory } from "../factory/boxCenterFactory";
 import { BoxLeftFactory } from "../factory/boxLeftFactory";
 import { BoxRightFactory } from "../factory/boxRightFactory";
 import { Box } from "../objects/box";
+import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { Resolution } from "../types/common";
 import { Level } from "./level";
 import { Level2 } from "./level2";
 import { Level4 } from "./level4";
 
 export class Level3 extends Level {
-    boxes: Box[];
+    boxes: BoxBodyWrapper[];
     name: string = "2"
     playerStart: Resolution;
     playerEnd: Resolution;

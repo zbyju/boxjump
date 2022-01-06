@@ -2,6 +2,7 @@ import Matter, { IChamferableBodyDefinition } from "matter-js";
 import { WALL_WIDTH } from "../constants";
 import { getDefaultBoxOptions } from "../default/boxDefaults";
 import { Box } from "../objects/box";
+import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { Resolution, Size } from "../types/common";
 
 export abstract class BoxFactory {
@@ -21,16 +22,15 @@ export abstract class BoxFactory {
         else return x
     }
 
-    abstract createBox(x: number, y: number, width: number, height: number, options?: IChamferableBodyDefinition): Box
-    abstract createBoxAngled(x: number, y: number, width: number, height: number, options?: IChamferableBodyDefinition): Box
+    abstract createBox(x: number, y: number, width: number, height: number, options?: IChamferableBodyDefinition): BoxBodyWrapper
 
-    createXSBox(x: number, y: number): Box {
+    createXSBox(x: number, y: number): BoxBodyWrapper {
         return this.createBox(x, y, this.xsSize.width, this.xsSize.height)
     }
-    createSMBox(x: number, y: number): Box {
+    createSMBox(x: number, y: number): BoxBodyWrapper {
         return this.createBox(x, y, this.smSize.width, this.smSize.height)
     }
-    createMDBox(x: number, y: number): Box {
+    createMDBox(x: number, y: number): BoxBodyWrapper {
         return this.createBox(x, y, this.mdSize.width, this.mdSize.height)
     }
 }

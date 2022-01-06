@@ -3,12 +3,13 @@ import { BoxFactory } from "../factory/boxFactory";
 import { BoxLeftFactory } from "../factory/boxLeftFactory";
 import { BoxRightFactory } from "../factory/boxRightFactory";
 import { Box } from "../objects/box";
+import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { Resolution } from "../types/common";
 import { Level } from "./level";
 import { Level2 } from "./level2";
 
 export class Level1 extends Level {
-    boxes: Box[];
+    boxes: BoxBodyWrapper[];
     name: string = "1"
     playerStart: Resolution;
     playerEnd: Resolution;
@@ -16,7 +17,7 @@ export class Level1 extends Level {
     constructor(resolution: Resolution) {
         super(resolution)
         this.playerStart = {width: this.resolution.width / 2, height: this.resolution.height - 10}
-        this.playerEnd = {width: this.resolution.width / 8, height: this.resolution.height / 7.5 - 10}
+        this.playerEnd = {width: this.resolution.width / 8, height: this.resolution.height / 10 - 10}
 
         const bfl = new BoxLeftFactory(this.resolution) 
         const bfr = new BoxRightFactory(this.resolution) 

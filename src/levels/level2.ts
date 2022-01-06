@@ -3,13 +3,14 @@ import { BoxCenterFactory } from "../factory/boxCenterFactory";
 import { BoxLeftFactory } from "../factory/boxLeftFactory";
 import { BoxRightFactory } from "../factory/boxRightFactory";
 import { Box } from "../objects/box";
+import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { Resolution } from "../types/common";
 import { Level } from "./level";
 import { Level1 } from "./level1";
 import { Level3 } from "./level3";
 
 export class Level2 extends Level {
-    boxes: Box[];
+    boxes: BoxBodyWrapper[];
     name: string = "2"
     playerStart: Resolution;
     playerEnd: Resolution;
@@ -17,7 +18,7 @@ export class Level2 extends Level {
     constructor(resolution: Resolution) {
         super(resolution)
         this.playerStart = {width: this.resolution.width / 2, height: this.resolution.height - 25}
-        this.playerEnd = {width: this.resolution.width / 8, height: this.resolution.height / 7.5 - 10}
+        this.playerEnd = {width: this.resolution.width / 8, height: 30}
 
         const bfl = new BoxLeftFactory(this.resolution)
         const bfr = new BoxRightFactory(this.resolution)
@@ -27,17 +28,17 @@ export class Level2 extends Level {
             bfc.createBox(this.resolution.width / 8, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200),
             bfc.createBox(this.resolution.width / 8 * 7, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200),
 
-            bfl.createBoxAngled(72, this.resolution.height + 40, 50, 50),
-            bfr.createBoxAngled(72, this.resolution.height + 40, 50, 50),
-
             bfc.createBox(this.resolution.width / 2, this.resolution.height - 200, 20, 150),
-            bfc.createMDBox(this.resolution.width / 2, this.resolution.height - 230),
+            bfl.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 230),
+            bfr.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 230),
 
             bfc.createBox(this.resolution.width / 2, this.resolution.height - 450, 20, 150),
-            bfc.createMDBox(this.resolution.width / 2, this.resolution.height - 480),
+            bfl.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 480),
+            bfr.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 480),
 
-            bfl.createXSBox(this.resolution.width / 8, this.resolution.height - 150),
-            bfr.createXSBox(this.resolution.width / 8, this.resolution.height - 300),
+
+            bfl.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 150),
+            bfr.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 300),
         ]
     }
 

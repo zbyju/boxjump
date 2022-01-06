@@ -33,9 +33,9 @@ export class GameManager extends ECS.Component {
             const nextLevel = level.getNextLevel()
             if(nextLevel == null) return
             this.boxes.forEach(b => {
-                Matter.World.remove(this.binder.mWorld, b.box)
+                Matter.World.remove(this.binder.mWorld, b.body)
                 
-                const pixi = this.binder.findSyncObjectForBody(b.box)
+                const pixi = this.binder.findSyncObjectForBody(b.body)
                 if(pixi) pixi.destroy()
             })
             this.engine.scene.assignGlobalAttribute("level", nextLevel)
@@ -48,9 +48,9 @@ export class GameManager extends ECS.Component {
             const prevLevel = level.getPrevLevel()
             if(prevLevel == null) return
             this.boxes.forEach(b => {
-                Matter.World.remove(this.binder.mWorld, b.box)
+                Matter.World.remove(this.binder.mWorld, b.body)
                 
-                const pixi = this.binder.findSyncObjectForBody(b.box)
+                const pixi = this.binder.findSyncObjectForBody(b.body)
                 if(pixi) pixi.destroy()
             })
             this.engine.scene.assignGlobalAttribute("level", prevLevel)
@@ -64,6 +64,7 @@ export class GameManager extends ECS.Component {
     initializeGame() {
         this.walls = this.initBoundry()
         this.player = this.initPlayer()
+        this.engine.scene.assignGlobalAttribute("player", this.player)
         
         const level1 = new Level1(getResolutionFromEngine(this.engine))
         this.engine.scene.assignGlobalAttribute("level", level1)
@@ -81,6 +82,6 @@ export class GameManager extends ECS.Component {
     }
 
     initBoxes() {
-        return this.factory.createBoxes(this.engine.scene.getGlobalAttribute("level"))
+        return this.factory.createBoxes(this.engine.scene.getGlobalAttribute("level"), this.engine.scene.getGlobalAttribute("player"))
     }
 }
