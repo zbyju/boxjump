@@ -41,6 +41,8 @@ export class GameManager extends ECS.Component {
             this.engine.scene.assignGlobalAttribute("level", nextLevel)
     
             this.boxes = this.initBoxes()
+
+            this.sendMessage("changelevelnext")
         } else if(msg.action == "prevlevel") {
             const level: Level = this.engine.scene.getGlobalAttribute("level")
             const prevLevel = level.getPrevLevel()
@@ -54,6 +56,8 @@ export class GameManager extends ECS.Component {
             this.engine.scene.assignGlobalAttribute("level", prevLevel)
     
             this.boxes = this.initBoxes()
+
+            this.sendMessage("changelevelprev")
         }
     }
 

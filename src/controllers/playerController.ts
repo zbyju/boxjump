@@ -7,6 +7,7 @@ import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
 import PositionQueue from '../utils/positionQueue';
 import { Resolution } from '../types/common';
 import { Level } from '../levels/level';
+import { MeshGeometry } from 'pixi.js';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body
@@ -26,6 +27,11 @@ export class PlayerController extends ECS.Component {
 		this.speed = 0
 		this.playerJump = getDefaultJump()
 	}
+
+	onInit(): void {
+		this.subscribe("changelevelnext", "changelevelprev")
+	}
+
 	calcMoveSpeed(delta: number) {
 		return MOVE_SPEED * delta * SPEED
 	}
@@ -118,21 +124,27 @@ export class PlayerController extends ECS.Component {
 		}
 	}
 
-	updateLevel() {
-		//Update to next level
-		if(this.playerBody.position.y < 0) {
-			this.sendMessage("nextlevel")
+	onMessage(msg: ECS.Message) {
+		if(msg.action === "changelevelnext") {
 			Matter.Body.setPosition(this.playerBody, {
 				x: this.playerBody.position.x,
 				y: this.playerBody.position.y + this.resolution.height
 			})
-		}
-		if(this.playerBody.bounds.min.y > this.resolution.height) {
-			this.sendMessage("prevlevel")
+		} else if(msg.action === "changelevelprev") {
 			Matter.Body.setPosition(this.playerBody, {
 				x: this.playerBody.position.x,
 				y: this.playerBody.position.y - this.resolution.height
 			})
+		}
+	}
+
+	updateLevel() {
+		//Update to next level
+		if(this.playerBody.position.y < 0) {
+			this.sendMessage("nextlevel")
+		}
+		if(this.playerBody.bounds.min.y > this.resolution.height) {
+			this.sendMessage("prevlevel")
 		}
 	}
 
