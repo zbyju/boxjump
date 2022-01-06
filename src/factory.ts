@@ -5,6 +5,8 @@ import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
 import { GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 import { Level } from './levels/level';
+import { BoxController } from './controllers/boxController';
+import { Box } from './objects/box';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind
@@ -45,21 +47,13 @@ export class GameFactory {
         return [leftWall, rightWall]
     }
 
-    createBoxes(level: Level) {
+    createBoxes(level: Level, player: Matter.Body): Box[] {
         const boxes = level.getBoxes()
-        boxes.forEach(box => {
-            const boxContainer: ECS.Container = this.binder.addBody(box.box)
-            const graphics = new ECS.Graphics().beginFill(0x2D2D2D).drawRect(- boxContainer.width / 2, - boxContainer.height / 2, boxContainer.width, boxContainer.height)
-            if(box.box.angle != 0){
-                const ratio = boxContainer.width / box.size.width
-                graphics.width = Math.ceil(boxContainer.width / ratio) + 1
-                graphics.height = Math.ceil(boxContainer.height / ratio) + 1
-                graphics.rotation = box.box.angle
-            }
-            boxContainer.addChild(
-                graphics
-            ).addTag("box")
+        return boxes.map(b => {
+            const boxContainer: ECS.Container = this.binder.addBody(b.body)
+            const box: Box = new Box(b, boxContainer)
+            boxContainer.addComponent(new BoxController(box, player))
+            return box
         })
-        return boxes
     }
 }
