@@ -7,7 +7,6 @@ import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
 import PositionQueue from '../utils/positionQueue';
 import { Resolution } from '../types/common';
 import { Level } from '../levels/level';
-import { MeshGeometry } from 'pixi.js';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body
@@ -20,7 +19,7 @@ export class PlayerController extends ECS.Component {
 	constructor(playerBody: Matter.Body, resolution: Resolution) {
 		super()
 		this.playerBody = playerBody
-		this.positionQueue = new PositionQueue()
+		this.positionQueue = new PositionQueue(3)
 		this.playerState = PlayerState.STANDING
 		this.resolution = resolution
 
@@ -44,7 +43,6 @@ export class PlayerController extends ECS.Component {
 	}
 
 	jump(delta: number) {
-		// console.log("JUMPING")
 		const jumpPower = calculateJumpPower(this.playerJump)
 		const jumpVector = Matter.Vector.normalise(Matter.Vector.create(this.playerJump.jumpDirection * JUMP_X, -1 * JUMP_Y))
 		Matter.Body.applyForce(this.playerBody, {
@@ -54,7 +52,7 @@ export class PlayerController extends ECS.Component {
 	}
 
 	updateState(delta: number) {
-		if(this.positionQueue.getMaxDifferenceY() > 0.1) {
+		if(this.positionQueue.getMaxDifferenceY() > 0.01) {
 			this.playerState = PlayerState.FLYING
 			return
 		} else if(this.playerState === PlayerState.FLYING) {
