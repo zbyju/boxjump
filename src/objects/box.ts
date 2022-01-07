@@ -1,7 +1,9 @@
+import * as PixiMatter from '../../libs/pixi-matter'
 import Matter from "matter-js";
 import * as ECS from '../../libs/pixi-ecs';
 import { Coordinates, Size } from "../types/common";
 import { BoxBodyWrapper } from "./boxBodyWrapper";
+import { BoxController } from '../controllers/boxController';
 
 export class Box {
     group: string
@@ -20,6 +22,9 @@ export class Box {
         this.activeColor = activeColor
 
         this.addGraphics()
+
+        this.container.addTag("box")
+        this.container.addTag(this.group)
     }
 
     removeGraphics() {
@@ -41,7 +46,9 @@ export class Box {
     createGraphics(coords: Coordinates, size: Size, color: number) {
         const graphics = new ECS.Graphics().beginFill(color).drawRect(coords.x, coords.y, size.width, size.height)
         this.container.addChild(graphics)
-        this.container.addTag("box")
-        this.container.addTag(this.group)
+    }
+
+    addComponents(playerBody: Matter.Body, binder: PixiMatter.MatterBind) {
+        this.container.addComponent(new BoxController(this, playerBody, binder.scene))
     }
 }
