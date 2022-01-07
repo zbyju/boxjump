@@ -12,3 +12,8 @@ export type Coordinates = {
     x: number
     y: number
 }
+
+export type Vector = {
+    x: number
+    y: number
+}

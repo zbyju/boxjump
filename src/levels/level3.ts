@@ -1,4 +1,5 @@
 import { Body } from "matter-js";
+import { GRAVITY_Y } from "../constants";
 import { BoxCenterFactory } from "../factory/boxCenterFactory";
 import { BoxLeftFactory } from "../factory/boxLeftFactory";
 import { BoxRightFactory } from "../factory/boxRightFactory";
@@ -26,10 +27,10 @@ export class Level3 extends Level {
         this.boxes = [
             bfc.createMDBox(this.resolution.width / 2, this.resolution.height - 10, "1"),
 
-            bfl.createSMBox(200, this.resolution.height - 170, "2"),
+            bfl.createGravityBox(200, this.resolution.height - 170, bfl.smSize.width, bfl.smSize.height, "2", {x: 0.05, y: GRAVITY_Y}),
             bfl.createXSBox(100, this.resolution.height - 220, "3"),
             bfl.createSMBox(300, this.resolution.height - 280, "4"),
-            bfl.createSMBox(200, this.resolution.height - 450, "5"),
+            bfl.createGravityBox(200, this.resolution.height - 450, bfl.smSize.width, bfl.smSize.height, "5", {x: 0, y: GRAVITY_Y}),
 
             bfr.createXSBox(100, this.resolution.height - 370, "6")
         ]
