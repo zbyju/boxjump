@@ -3,7 +3,7 @@ import { Resolution } from './types/common'
 import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
-import { GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
+import { GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_FRICTION_STATIC, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 import { Level } from './levels/level';
 import { BoxController } from './controllers/boxController';
 import { Box } from './objects/box';
@@ -24,6 +24,7 @@ export class GameFactory {
             restitution: PLAYER_RESTITUTION,
             friction: PLAYER_FRICTION,
             frictionAir: PLAYER_FRICTION_AIR,
+            frictionStatic: PLAYER_FRICTION_STATIC,
             inertia: PLAYER_INERTIA,
         }
         const playerBody = Matter.Bodies.rectangle(

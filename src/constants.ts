@@ -5,7 +5,7 @@ export const SPEED = 2
 export const JUMP_POWER = 0.01
 export const JUMP_X = 0.2
 export const JUMP_Y = 0.4
-export const MOVE_SPEED = 0.05
+export const MOVE_SPEED = 0.0004
 
 
 //Player Style Params
@@ -21,6 +21,7 @@ export const PLAYER_RESTITUTION = 0.1
 export const PLAYER_FRICTION = 0.1
 export const PLAYER_FRICTION_AIR = 0
 export const PLAYER_INERTIA = Infinity
+export const PLAYER_FRICTION_STATIC = 0.5
 
 
 //Matter Engine Params
@@ -30,7 +31,7 @@ export const GRAVITY_Y = 0.1
 
 //Outside Walls Params
 export const WALL_RESTITUTION = .6
-export const WALL_FRICTION = 1
+export const WALL_FRICTION = 0.1
 export const WALL_WIDTH = 1
 
 //Ground params

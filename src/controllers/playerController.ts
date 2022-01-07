@@ -35,11 +35,11 @@ export class PlayerController extends ECS.Component {
 		return MOVE_SPEED * delta * SPEED
 	}
 	moveLeft(delta: number) {
-		Matter.Body.setVelocity(this.playerBody, { x: -this.calcMoveSpeed(delta), y: 0 })
+		Matter.Body.applyForce(this.playerBody, this.playerBody.position, { x: -this.calcMoveSpeed(delta), y: 0})
 	}
 
 	moveRight(delta: number) {
-		Matter.Body.setVelocity(this.playerBody, { x: this.calcMoveSpeed(delta), y: 0 })
+		Matter.Body.applyForce(this.playerBody, this.playerBody.position, { x: this.calcMoveSpeed(delta), y: 0})
 	}
 
 	jump(delta: number) {
