@@ -17,14 +17,14 @@ export class Level2 extends Level {
 
     constructor(resolution: Resolution) {
         super(resolution)
-        this.playerStart = {width: this.resolution.width / 2, height: this.resolution.height - 25}
+        this.playerStart = {width: this.resolution.width / 2, height: this.resolution.height - 101}
         this.playerEnd = {width: this.resolution.width / 8, height: 30}
 
         const bfl = new BoxLeftFactory(this.resolution)
         const bfr = new BoxRightFactory(this.resolution)
         const bfc = new BoxCenterFactory(this.resolution)
         this.boxes = [
-            bfc.createBox(this.resolution.width / 2, this.resolution.height - 10, this.resolution.width / 8 * 6, 20, "floor"),
+            bfc.createBox(this.resolution.width / 2, this.resolution.height - 50, this.resolution.width / 8 * 6, 20, "floor"),
             bfc.createBox(this.resolution.width / 8, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200, "left"),
             bfc.createBox(this.resolution.width / 8 * 7, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200, "right"),
 
@@ -38,7 +38,7 @@ export class Level2 extends Level {
 
 
             bfl.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 150, "left"),
-            bfr.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 300, "right"),
+            bfr.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 350, "right"),
         ]
     }
 
