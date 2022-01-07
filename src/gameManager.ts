@@ -7,6 +7,7 @@ import Matter from "matter-js";
 import { Level } from "./levels/level";
 import { Level2 } from "./levels/level2";
 import { Box } from "./objects/box";
+import { GRAVITY_X, GRAVITY_Y } from "./constants";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;
@@ -41,6 +42,7 @@ export class GameManager extends ECS.Component {
             this.engine.scene.assignGlobalAttribute("level", nextLevel)
     
             this.boxes = this.initBoxes()
+            this.resetWorld()
 
             this.sendMessage("changelevelnext")
         } else if(msg.action == "prevlevel") {
@@ -56,6 +58,7 @@ export class GameManager extends ECS.Component {
             this.engine.scene.assignGlobalAttribute("level", prevLevel)
     
             this.boxes = this.initBoxes()
+            this.resetWorld()
 
             this.sendMessage("changelevelprev")
         }
@@ -70,6 +73,8 @@ export class GameManager extends ECS.Component {
         this.engine.scene.assignGlobalAttribute("level", level1)
 
         this.boxes = this.initBoxes()
+
+        this.resetWorld()
     }
 
     initBoundry() {
@@ -82,5 +87,10 @@ export class GameManager extends ECS.Component {
 
     initBoxes() {
         return this.factory.createBoxes(this.engine.scene.getGlobalAttribute("level"), this.engine.scene.getGlobalAttribute("player"))
+    }
+
+    resetWorld() {
+        this.binder.mEngine.gravity.x = GRAVITY_X
+        this.binder.mEngine.gravity.y = GRAVITY_Y
     }
 }
