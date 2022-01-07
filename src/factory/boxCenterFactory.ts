@@ -12,8 +12,8 @@ export class BoxCenterFactory extends BoxFactory {
         super(resolution)
     }
 
-    createBox(x: number, y: number, width: number, height: number, options: IChamferableBodyDefinition = getDefaultBoxOptions()): BoxBodyWrapper {
+    createBox(x: number, y: number, width: number, height: number, group: string, options: IChamferableBodyDefinition = getDefaultBoxOptions()): BoxBodyWrapper {
         const _x = this.recalculateXWithWall(x)
-        return new BoxBodyWrapper(Matter.Bodies.rectangle(_x, y, width, height, options), {width, height})
+        return new BoxBodyWrapper(Matter.Bodies.rectangle(_x, y, width, height, options), {width, height}, group)
     }
 }

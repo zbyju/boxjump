@@ -5,9 +5,11 @@ import { Size } from "../types/common";
 export class BoxBodyWrapper {
     body: Matter.Body
     size: Size
+    group: string
 
-    constructor(body: Matter.Body, size: Size) {
+    constructor(body: Matter.Body, size: Size, group: string) {
         this.body = body
         this.size = size
+        this.group = group
     }
 }

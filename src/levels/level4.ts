@@ -23,14 +23,15 @@ export class Level4 extends Level {
         const bfr = new BoxRightFactory(this.resolution)
         const bfc = new BoxCenterFactory(this.resolution)
         this.boxes = [
-            bfl.createBox(-2, 0, 4, 1000),
-            bfr.createBox(-2, 0, 4, 1000),
-            bfl.createMDBox(0, this.resolution.height - 10),
-            bfl.createXSBox(150, this.resolution.height - 200),
-            bfl.createXSBox(400, this.resolution.height - 280),
-            bfl.createXSBox(650, this.resolution.height - 360),
+            bfl.createBox(-2, 0, 4, 1000, "leftb"),
+            bfr.createBox(-2, 0, 4, 1000, "rightb"),
+            bfl.createMDBox(0, this.resolution.height - 10, "1"),
+            bfl.createXSBox(150, this.resolution.height - 200, "2"),
+            bfl.createXSBox(400, this.resolution.height - 280, "3"),
+            bfl.createXSBox(650, this.resolution.height - 360, "4"),
 
-            bfl.createBox(0, this.resolution.height - 400, 300, 30),
+            bfl.createBox(0, this.resolution.height - 400, 300, 30, "5"),
+            bfl.createBox(300, this.resolution.height - 400, 30, 100, "5"),
         ]
     }
 

@@ -23,16 +23,16 @@ export class Level1 extends Level {
         const bfr = new BoxRightFactory(this.resolution) 
                
         this.boxes = [
-            bfl.createBox(0, this.resolution.height, this.resolution.width, 2),
-            bfl.createBox(0, this.resolution.height, 250, 150),
-            bfr.createBox(0, this.resolution.height, 250, 150),
+            bfl.createBox(0, this.resolution.height, this.resolution.width, 2, "floor"),
+            bfl.createBox(0, this.resolution.height, 250, 150, "bigright"),
+            bfr.createBox(0, this.resolution.height, 250, 150, "bigleft"),
 
-            bfl.createMDBox(185, this.resolution.height - 220),
-            bfl.createMDBox(0, this.resolution.height / 2.4),
-            bfl.createSMBox(this.resolution.width / 2, this.resolution.height / 3),
-            bfr.createSMBox(this.resolution.width / 2, this.resolution.height / 3),
-            bfl.createSMBox(60, this.resolution.height / 7.5),
-            bfr.createSMBox(60, this.resolution.height / 7.5),
+            bfl.createMDBox(185, this.resolution.height - 220, "1"),
+            bfl.createMDBox(0, this.resolution.height / 2.4, "2"),
+            bfl.createSMBox(this.resolution.width / 2, this.resolution.height / 3, "3"),
+            bfr.createSMBox(this.resolution.width / 2, this.resolution.height / 3, "3"),
+            bfl.createSMBox(60, this.resolution.height / 7.5, "4"),
+            bfr.createSMBox(60, this.resolution.height / 7.5, "5"),
         ]
     }
 

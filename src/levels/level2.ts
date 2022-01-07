@@ -24,21 +24,21 @@ export class Level2 extends Level {
         const bfr = new BoxRightFactory(this.resolution)
         const bfc = new BoxCenterFactory(this.resolution)
         this.boxes = [
-            bfc.createBox(this.resolution.width / 2, this.resolution.height - 10, this.resolution.width / 8 * 6, 20),
-            bfc.createBox(this.resolution.width / 8, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200),
-            bfc.createBox(this.resolution.width / 8 * 7, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200),
+            bfc.createBox(this.resolution.width / 2, this.resolution.height - 10, this.resolution.width / 8 * 6, 20, "floor"),
+            bfc.createBox(this.resolution.width / 8, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200, "left"),
+            bfc.createBox(this.resolution.width / 8 * 7, (this.resolution.height - 100) / 2, 20, this.resolution.height - 200, "right"),
 
-            bfc.createBox(this.resolution.width / 2, this.resolution.height - 200, 20, 150),
-            bfl.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 230),
-            bfr.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 230),
+            bfc.createBox(this.resolution.width / 2, this.resolution.height - 200, 20, 150, "1"),
+            bfl.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 230, "1"),
+            bfr.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 230, "1"),
 
-            bfc.createBox(this.resolution.width / 2, this.resolution.height - 450, 20, 150),
-            bfl.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 480),
-            bfr.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 480),
+            bfc.createBox(this.resolution.width / 2, this.resolution.height - 450, 20, 150, "2"),
+            bfl.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 480, "2"),
+            bfr.createXSBox(this.resolution.width / 2 + 13, this.resolution.height - 480, "2"),
 
 
-            bfl.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 150),
-            bfr.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 300),
+            bfl.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 150, "left"),
+            bfr.createXSBox(this.resolution.width / 8 + 10, this.resolution.height - 300, "right"),
         ]
     }
 

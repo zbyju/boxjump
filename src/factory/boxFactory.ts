@@ -22,15 +22,15 @@ export abstract class BoxFactory {
         else return x
     }
 
-    abstract createBox(x: number, y: number, width: number, height: number, options?: IChamferableBodyDefinition): BoxBodyWrapper
+    abstract createBox(x: number, y: number, width: number, height: number, group: string, options?: IChamferableBodyDefinition): BoxBodyWrapper
 
-    createXSBox(x: number, y: number): BoxBodyWrapper {
-        return this.createBox(x, y, this.xsSize.width, this.xsSize.height)
+    createXSBox(x: number, y: number, group: string): BoxBodyWrapper {
+        return this.createBox(x, y, this.xsSize.width, this.xsSize.height, group)
     }
-    createSMBox(x: number, y: number): BoxBodyWrapper {
-        return this.createBox(x, y, this.smSize.width, this.smSize.height)
+    createSMBox(x: number, y: number, group: string): BoxBodyWrapper {
+        return this.createBox(x, y, this.smSize.width, this.smSize.height, group)
     }
-    createMDBox(x: number, y: number): BoxBodyWrapper {
-        return this.createBox(x, y, this.mdSize.width, this.mdSize.height)
+    createMDBox(x: number, y: number, group: string): BoxBodyWrapper {
+        return this.createBox(x, y, this.mdSize.width, this.mdSize.height, group)
     }
 }

@@ -51,8 +51,8 @@ export class GameFactory {
         const boxes = level.getBoxes()
         return boxes.map(b => {
             const boxContainer: ECS.Container = this.binder.addBody(b.body)
-            const box: Box = new Box(b, boxContainer)
-            boxContainer.addComponent(new BoxController(box, player))
+            const box: Box = new Box(b, boxContainer, b.group)
+            boxContainer.addComponent(new BoxController(box, player, this.binder.scene))
             return box
         })
     }

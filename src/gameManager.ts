@@ -70,7 +70,6 @@ export class GameManager extends ECS.Component {
         this.engine.scene.assignGlobalAttribute("level", level1)
 
         this.boxes = this.initBoxes()
-        
     }
 
     initBoundry() {
