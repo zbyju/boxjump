@@ -45,7 +45,7 @@ class ProjectJumper {
 		let gm = new GameManager(this.engine, this.binder)
 		scene.addGlobalComponent(new ECS.KeyInputComponent())
 		scene.addGlobalComponent(gm)
-		gm.initializeGame()
+		gm.playIntro()
 	}
 }
 
