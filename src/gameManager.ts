@@ -10,6 +10,7 @@ import { Box } from "./objects/box";
 import { GRAVITY_X, GRAVITY_Y } from "./constants";
 import { Player } from "./objects/player";
 import pixiSound from "pixi-sound";
+import { IntroController } from "./controllers/introController";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;
@@ -28,7 +29,7 @@ export class GameManager extends ECS.Component {
     }
 
     onInit(): void {
-        this.subscribe("nextlevel", "prevlevel", "finishgame")
+        this.subscribe("nextlevel", "prevlevel", "finishgame", "introdone")
     }
 
     onMessage(msg: ECS.Message) {
@@ -56,12 +57,18 @@ export class GameManager extends ECS.Component {
             this.sendMessage("changelevelprev")
         } else if(msg.action == "finishgame") {
             this.finishGame()
+        } else if(msg.action == "introdone") {
+            this.initializeGame()
         }
     }
 
     finishGame() {
-        console.log("game ended")
         this.initializeGame()
+    }
+
+    playIntro() {
+        const resolution = getResolutionFromEngine(this.engine)
+        this.binder.scene.stage.addComponentAndRun(new IntroController(this.binder.scene, resolution))
     }
 
     removeAllBoxes() {
@@ -81,11 +88,19 @@ export class GameManager extends ECS.Component {
         this.player.container.destroy()
     }
 
+    removeWalls() {
+        if(!this.walls) return
+        this.walls.forEach(w => {
+            Matter.World.remove(this.binder.mWorld, w)
+        })
+    }
+
     initializeGame() {
         this.removeAllBoxes()
         this.removePlayer()
-        this.walls = this.initBoundry()
+        this.removeWalls()
 
+        this.walls = this.initBoundry()
         this.player = this.initPlayer()
         this.engine.scene.assignGlobalAttribute("player", this.player)
         
