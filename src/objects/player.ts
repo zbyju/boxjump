@@ -20,9 +20,4 @@ export class Player {
         }
         this.container.addChild(new ECS.Graphics().beginFill(0xFFFFFF).drawRect(-PLAYER_WIDTH / 2, - PLAYER_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT))
     }
-
-    remove() {
-        this.body.
-        this.container.destroy()
-    }
 }
