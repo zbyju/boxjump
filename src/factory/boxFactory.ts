@@ -3,6 +3,7 @@ import { WALL_WIDTH } from "../constants";
 import { getDefaultBoxOptions } from "../default/boxDefaults";
 import { Box } from "../objects/box";
 import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
+import { FinishBoxBodyWrapper } from "../objects/finishBoxBodyWrapper";
 import { GravityBoxBodyWrapper } from "../objects/gravityBoxBodyWrapper";
 import { Resolution, Size, Vector } from "../types/common";
 
@@ -29,6 +30,11 @@ export abstract class BoxFactory {
     createGravityBox(x: number, y: number, width: number, height: number, group: string, gravity: Vector, options?: IChamferableBodyDefinition): BoxBodyWrapper {
         const box = this.createBox(x, y, width, height, group, options)
         return new GravityBoxBodyWrapper(box.body, box.size, box.group, gravity)
+    }
+
+    createFinishBox(x: number, y: number, width: number, height: number, group: string, options?: IChamferableBodyDefinition): BoxBodyWrapper {
+        const box = this.createBox(x, y, width, height, group, options)
+        return new FinishBoxBodyWrapper(box.body, box.size, box.group)
     }
 
     createXSBox(x: number, y: number, group: string): BoxBodyWrapper {

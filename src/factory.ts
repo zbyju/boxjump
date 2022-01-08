@@ -8,6 +8,9 @@ import { Level } from './levels/level';
 import { BoxController } from './controllers/boxController';
 import { Box } from './objects/box';
 import { CheatingController } from './controllers/cheatingController';
+import { Player } from './objects/player';
+import { getDefaultPlayerOptions, getDefaultPlayerSize } from './default/playerDefaults';
+import { getDefaultBoxOptions } from './default/boxDefaults';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind
@@ -19,27 +22,16 @@ export class GameFactory {
     }
 
     createPlayer() {
-        console.log(PLAYER_DENSITY)
-        const options: IChamferableBodyDefinition = {
-            density: PLAYER_DENSITY,
-            restitution: PLAYER_RESTITUTION,
-            friction: PLAYER_FRICTION,
-            frictionAir: PLAYER_FRICTION_AIR,
-            frictionStatic: PLAYER_FRICTION_STATIC,
-            inertia: PLAYER_INERTIA,
-        }
+        const size = getDefaultPlayerSize()
+        const options = getDefaultPlayerOptions()
         const playerBody = Matter.Bodies.rectangle(
             this.resolution.width / 2, this.resolution.height - GROUND_WIDTH - 2,
-            PLAYER_WIDTH, PLAYER_HEIGHT, options
+            size.width, size.height, options
         )
 		const playerContainer: ECS.Container = this.binder.addBody(playerBody)
-		playerContainer.addComponent(new PlayerController(playerBody, this.resolution))
-        if(CHEATING) {
-            playerContainer.addComponent(new CheatingController(playerBody, this.resolution))
-        }
-        playerContainer.addChild(new ECS.Graphics().beginFill(0xFFFFFF).drawRect(-PLAYER_WIDTH / 2, - PLAYER_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT))
-
-        return playerBody
+        const player = new Player(playerBody, playerContainer, this.resolution)
+		
+        return player
     }
 
     createWalls() {

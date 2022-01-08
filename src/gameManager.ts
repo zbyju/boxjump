@@ -8,12 +8,14 @@ import { Level } from "./levels/level";
 import { Level2 } from "./levels/level2";
 import { Box } from "./objects/box";
 import { GRAVITY_X, GRAVITY_Y } from "./constants";
+import { Player } from "./objects/player";
+import pixiSound from "pixi-sound";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;
 	binder: PixiMatter.MatterBind
     factory: GameFactory
-    player: Matter.Body
+    player: Player
     walls: Array<Matter.Body>
     boxes: Array<Box>
 
@@ -22,10 +24,11 @@ export class GameManager extends ECS.Component {
         this.engine = engine;
         this.binder = binder;
         this.factory = new GameFactory(this.binder, getResolutionFromEngine(this.engine))
+        this.boxes = []
     }
 
     onInit(): void {
-        this.subscribe("nextlevel", "prevlevel")
+        this.subscribe("nextlevel", "prevlevel", "finishgame")
     }
 
     onMessage(msg: ECS.Message) {
@@ -33,39 +36,56 @@ export class GameManager extends ECS.Component {
             const level: Level = this.engine.scene.getGlobalAttribute("level")
             const nextLevel = level.getNextLevel()
             if(nextLevel == null) return
-            this.boxes.forEach(b => {
-                Matter.World.remove(this.binder.mWorld, b.body)
-                
-                const pixi = this.binder.findSyncObjectForBody(b.body)
-                if(pixi) pixi.destroy()
-            })
+            this.removeAllBoxes()
             this.engine.scene.assignGlobalAttribute("level", nextLevel)
     
             this.boxes = this.initBoxes()
-            this.resetWorld()
+            this.resetWorldParams()
 
             this.sendMessage("changelevelnext")
         } else if(msg.action == "prevlevel") {
             const level: Level = this.engine.scene.getGlobalAttribute("level")
             const prevLevel = level.getPrevLevel()
             if(prevLevel == null) return
-            this.boxes.forEach(b => {
-                Matter.World.remove(this.binder.mWorld, b.body)
-                
-                const pixi = this.binder.findSyncObjectForBody(b.body)
-                if(pixi) pixi.destroy()
-            })
+            this.removeAllBoxes()
             this.engine.scene.assignGlobalAttribute("level", prevLevel)
     
             this.boxes = this.initBoxes()
-            this.resetWorld()
+            this.resetWorldParams()
 
             this.sendMessage("changelevelprev")
+        } else if(msg.action == "finishgame") {
+            this.finishGame()
         }
     }
 
+    finishGame() {
+        console.log("game ended")
+        this.initializeGame()
+    }
+
+    removeAllBoxes() {
+        if(!this.boxes) return 
+        this.boxes.forEach(b => {
+            Matter.World.remove(this.binder.mWorld, b.body)
+            
+            const pixi = this.binder.findSyncObjectForBody(b.body)
+            if(pixi) pixi.destroy()
+        })
+        this.boxes = []
+    }
+
+    removePlayer() {
+        if(!this.player) return
+        Matter.World.remove(this.binder.mWorld, this.player.body)
+        this.player.container.destroy()
+    }
+
     initializeGame() {
+        this.removeAllBoxes()
+        this.removePlayer()
         this.walls = this.initBoundry()
+
         this.player = this.initPlayer()
         this.engine.scene.assignGlobalAttribute("player", this.player)
         
@@ -74,7 +94,7 @@ export class GameManager extends ECS.Component {
 
         this.boxes = this.initBoxes()
 
-        this.resetWorld()
+        this.resetWorldParams()
     }
 
     initBoundry() {
@@ -86,10 +106,10 @@ export class GameManager extends ECS.Component {
     }
 
     initBoxes() {
-        return this.factory.createBoxes(this.engine.scene.getGlobalAttribute("level"), this.engine.scene.getGlobalAttribute("player"))
+        return this.factory.createBoxes(this.engine.scene.getGlobalAttribute("level"), this.engine.scene.getGlobalAttribute("player").body)
     }
 
-    resetWorld() {
+    resetWorldParams() {
         this.binder.mEngine.gravity.x = GRAVITY_X
         this.binder.mEngine.gravity.y = GRAVITY_Y
     }
