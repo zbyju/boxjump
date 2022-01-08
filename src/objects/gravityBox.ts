@@ -1,7 +1,7 @@
 import Matter from "matter-js";
 import * as ECS from '../../libs/pixi-ecs';
 import { MatterBind } from "../../libs/pixi-matter";
-import { GravityChangingBox } from "../controllers/gravityChangingBox";
+import { GravityBoxController } from "../controllers/gravityBoxController";
 import { Coordinates, Size, Vector } from "../types/common";
 import { Box } from "./box";
 import { BoxBodyWrapper } from "./boxBodyWrapper";
@@ -16,7 +16,6 @@ export class GravityBox extends Box {
     }
 
     override addComponents(playerBody: Matter.Body, binder: MatterBind): void {
-        super.addComponents(playerBody, binder)
-        this.container.addComponent(new GravityChangingBox(this, playerBody, binder.scene, binder.mEngine, this.gravity))
+        this.container.addComponent(new GravityBoxController(this, playerBody, binder.scene, binder.mEngine, this.gravity))
     }
 }

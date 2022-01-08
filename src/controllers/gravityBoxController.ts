@@ -5,7 +5,7 @@ import { Box } from '../objects/box';
 import { Vector } from '../types/common';
 import { addBoxGraphics, removeBoxGraphics } from '../utils/boxGraphics';
 
-export class GravityChangingBox extends ECS.Component {
+export class GravityBoxController extends ECS.Component {
     box: Box
     playerBody: Matter.Body
     scene: ECS.Scene
