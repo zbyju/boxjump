@@ -30,6 +30,8 @@ export class Level4 extends Level {
             bfl.createXSBox(400, this.resolution.height - 280, "3"),
             bfl.createXSBox(650, this.resolution.height - 360, "4"),
 
+            bfl.createFinishBox(0, this.resolution.height - 400, 3, 100, "finish"),
+
             bfl.createBox(0, this.resolution.height - 400, 300, 30, "5"),
             bfl.createBox(300, this.resolution.height - 400, 30, 100, "5"),
         ]
