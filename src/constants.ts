@@ -1,4 +1,5 @@
 //Global Params
+export const CHEATING = true
 export const SPEED = 2
 
 //Player Movement Params

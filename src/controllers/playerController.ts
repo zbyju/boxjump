@@ -101,26 +101,6 @@ export class PlayerController extends ECS.Component {
 				this.playerJump.jumpEnd = Date.now()
 				this.jump(delta)
 			}
-			if(Math.random() > 0.95) {
-				if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_P)) {
-					const level: Level = this.scene.getGlobalAttribute("level")
-					Matter.Body.setPosition(this.playerBody, {x: level.playerEnd.width, y: level.playerEnd.height})
-				}
-				if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_L)) {
-					const level: Level = this.scene.getGlobalAttribute("level")
-					Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
-				}
-				if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_O)) {
-					this.sendMessage("nextlevel")
-					const level: Level = this.scene.getGlobalAttribute("level")
-					Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
-				}
-				if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_K)) {
-					this.sendMessage("prevlevel")
-					const level: Level = this.scene.getGlobalAttribute("level")
-					Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
-				}
-			}
 		}
 	}
 

@@ -3,10 +3,11 @@ import { Resolution } from './types/common'
 import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
 import { PlayerController } from './controllers/playerController';
-import { GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_FRICTION_STATIC, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
+import { CHEATING, GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_FRICTION_STATIC, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 import { Level } from './levels/level';
 import { BoxController } from './controllers/boxController';
 import { Box } from './objects/box';
+import { CheatingController } from './controllers/cheatingController';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind
@@ -33,6 +34,9 @@ export class GameFactory {
         )
 		const playerContainer: ECS.Container = this.binder.addBody(playerBody)
 		playerContainer.addComponent(new PlayerController(playerBody, this.resolution))
+        if(CHEATING) {
+            playerContainer.addComponent(new CheatingController(playerBody, this.resolution))
+        }
         playerContainer.addChild(new ECS.Graphics().beginFill(0xFFFFFF).drawRect(-PLAYER_WIDTH / 2, - PLAYER_HEIGHT / 2, PLAYER_WIDTH, PLAYER_HEIGHT))
 
         return playerBody
