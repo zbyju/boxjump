@@ -1,6 +1,6 @@
 import * as ECS from '../../libs/pixi-ecs';
 import { Resolution } from '../types/common';
-import { IntroStages } from '../types/intro';
+import { IntroStages, OPAQUE, TRANSPARENT } from '../types/scenes';
 import { dateDifferenceInSeconds } from '../utils/date';
 
 export class IntroController extends ECS.Component {
@@ -16,7 +16,7 @@ export class IntroController extends ECS.Component {
         super()
         this.scene = scene
         this.resolution = resolution
-        this.alpha = 0
+        this.alpha = TRANSPARENT
         this.stage = IntroStages.WAIT
         this.wait = new Date()
 
@@ -56,16 +56,16 @@ export class IntroController extends ECS.Component {
         } else if(this.stage === IntroStages.FADE_BLACK) {
             this.alpha += 0.0005 * delta
             this.createCover()
-            if(this.alpha > 1) {
+            if(this.alpha > OPAQUE) {
                 this.stage = IntroStages.FADE_OUT
                 this.text.destroy()
                 this.sendMessage("introdone")
-                this.alpha = 1
+                this.alpha = OPAQUE
             }
         } else if(IntroStages.FADE_OUT) {
             this.alpha -= 0.0009 * delta
             this.createCover()
-            if(this.alpha <= 0) {
+            if(this.alpha <= TRANSPARENT) {
                 this.stage = IntroStages.DESTROY
                 this.cover.destroy()
                 this.finish()

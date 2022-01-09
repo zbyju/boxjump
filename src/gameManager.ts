@@ -11,6 +11,8 @@ import { GRAVITY_X, GRAVITY_Y } from "./constants";
 import { Player } from "./objects/player";
 import pixiSound from "pixi-sound";
 import { IntroController } from "./controllers/introController";
+import { OutroStages } from "./types/scenes";
+import { OutroController } from "./controllers/outroController";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;
@@ -19,6 +21,7 @@ export class GameManager extends ECS.Component {
     player: Player
     walls: Array<Matter.Body>
     boxes: Array<Box>
+    gameStart: Date
 
     constructor(engine: ECS.Engine, binder: PixiMatter.MatterBind) {
         super()
@@ -63,10 +66,12 @@ export class GameManager extends ECS.Component {
     }
 
     finishGame() {
-        this.initializeGame()
+        const resolution = getResolutionFromEngine(this.engine)
+        this.binder.scene.stage.addComponentAndRun(new OutroController(this.binder.scene, resolution, this.gameStart))
     }
 
     playIntro() {
+        console.log("asdfjklhaskjlfhkajlsdhf")
         const resolution = getResolutionFromEngine(this.engine)
         this.binder.scene.stage.addComponentAndRun(new IntroController(this.binder.scene, resolution))
     }
@@ -110,6 +115,8 @@ export class GameManager extends ECS.Component {
         this.boxes = this.initBoxes()
 
         this.resetWorldParams()
+
+        this.gameStart = new Date()
     }
 
     initBoundry() {

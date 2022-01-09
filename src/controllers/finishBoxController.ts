@@ -21,6 +21,7 @@ export class FinishBoxController extends ECS.Component {
         if(collision.collided) {
             console.log("test")
             this.sendMessage("finishgame")
+            this.finish()
         }
     }
 
