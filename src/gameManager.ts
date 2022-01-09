@@ -32,7 +32,7 @@ export class GameManager extends ECS.Component {
     }
 
     onInit(): void {
-        this.subscribe("nextlevel", "prevlevel", "finishgame", "introdone")
+        this.subscribe("nextlevel", "prevlevel", "finishgame", "introdone", "outrofadeout")
     }
 
     onMessage(msg: ECS.Message) {
@@ -62,6 +62,8 @@ export class GameManager extends ECS.Component {
             this.finishGame()
         } else if(msg.action == "introdone") {
             this.initializeGame()
+        } else if(msg.action == "outrofadeout") {
+            this.initializeGame()
         }
     }
 
@@ -71,7 +73,6 @@ export class GameManager extends ECS.Component {
     }
 
     playIntro() {
-        console.log("asdfjklhaskjlfhkajlsdhf")
         const resolution = getResolutionFromEngine(this.engine)
         this.binder.scene.stage.addComponentAndRun(new IntroController(this.binder.scene, resolution))
     }

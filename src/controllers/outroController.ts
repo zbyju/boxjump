@@ -131,6 +131,7 @@ export class OutroController extends ECS.Component {
                 this.recreateForeground()
             } else {
                 this.stage = OutroStages.FADE_OUT
+                this.sendMessage("outrofadeout")
                 this.removeText()
                 this.background.alpha = OPAQUE
                 this.createBackground()
@@ -142,6 +143,7 @@ export class OutroController extends ECS.Component {
                 this.recreateBackground()
             } else {
                 this.stage = OutroStages.DESTROY
+                this.sendMessage("outrodone")
                 this.background.cover.destroy()
             }
         }
