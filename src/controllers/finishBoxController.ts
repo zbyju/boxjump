@@ -17,9 +17,7 @@ export class FinishBoxController extends ECS.Component {
     
     checkFinishGame() {
         const collision = Matter.SAT.collides(this.box.body, this.playerBody)
-
         if(collision.collided) {
-            console.log("test")
             this.sendMessage("finishgame")
             this.finish()
         }
