@@ -18,7 +18,7 @@ export class Level2 extends Level {
     constructor(resolution: Resolution) {
         super(resolution)
         this.playerStart = {width: this.resolution.width / 2, height: this.resolution.height - 101}
-        this.playerEnd = {width: this.resolution.width / 8, height: 30}
+        this.playerEnd = {width: this.resolution.width / 8 * 7, height: 30}
 
         const bfl = new BoxLeftFactory(this.resolution)
         const bfr = new BoxRightFactory(this.resolution)
