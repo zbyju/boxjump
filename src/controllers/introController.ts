@@ -1,4 +1,5 @@
 import * as ECS from '../../libs/pixi-ecs';
+import { MessageEnum } from '../message';
 import { Resolution } from '../types/common';
 import { IntroStages, OPAQUE, TRANSPARENT } from '../types/scenes';
 import { dateDifferenceInSeconds } from '../utils/date';
@@ -59,7 +60,7 @@ export class IntroController extends ECS.Component {
             if(this.alpha > OPAQUE) {
                 this.stage = IntroStages.FADE_OUT
                 this.text.destroy()
-                this.sendMessage("introdone")
+                this.sendMessage(MessageEnum.INTRO_DONE)
                 this.alpha = OPAQUE
             }
         } else if(IntroStages.FADE_OUT) {

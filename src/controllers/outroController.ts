@@ -2,6 +2,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import { Resolution } from '../types/common';
 import { dateDifferenceInSeconds } from '../utils/date';
 import { Cover, OPAQUE, OutroStages, TRANSPARENT } from '../types/scenes';
+import { MessageEnum } from '../message';
 
 export class OutroController extends ECS.Component {
     scene: ECS.Scene
@@ -131,7 +132,7 @@ export class OutroController extends ECS.Component {
                 this.recreateForeground()
             } else {
                 this.stage = OutroStages.FADE_OUT
-                this.sendMessage("outrofadeout")
+                this.sendMessage(MessageEnum.OUTRO_FADE_OUT)
                 this.removeText()
                 this.background.alpha = OPAQUE
                 this.createBackground()
@@ -143,7 +144,7 @@ export class OutroController extends ECS.Component {
                 this.recreateBackground()
             } else {
                 this.stage = OutroStages.DESTROY
-                this.sendMessage("outrodone")
+                this.sendMessage(MessageEnum.OUTRO_DONE)
                 this.background.cover.destroy()
             }
         }

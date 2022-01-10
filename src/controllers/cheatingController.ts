@@ -9,6 +9,7 @@ import { Resolution } from '../types/common';
 import { Level } from '../levels/level';
 import { dateDifferenceInSeconds } from '../utils/date';
 import { KeyboardController } from './keyboardController';
+import { MessageEnum } from '../message';
 
 export class CheatingController extends ECS.Component {
 	playerBody: Matter.Body
@@ -37,13 +38,13 @@ export class CheatingController extends ECS.Component {
                 this.lastTeleport = new Date()
             }
             if(keyController.shouldTeleportNextLevel()) {
-                this.sendMessage("nextlevel")
+                this.sendMessage(MessageEnum.NEXT_LEVEL)
                 const level: Level = this.scene.getGlobalAttribute("level")
                 Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
                 this.lastTeleport = new Date()
             }
             if(keyController.shouldTeleportPreviousLevel()) {
-                this.sendMessage("prevlevel")
+                this.sendMessage(MessageEnum.PREV_LEVEL)
                 const level: Level = this.scene.getGlobalAttribute("level")
                 Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
                 this.lastTeleport = new Date()

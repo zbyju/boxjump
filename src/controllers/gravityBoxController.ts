@@ -1,6 +1,7 @@
 import Matter, { World } from 'matter-js';
 import * as ECS from '../../libs/pixi-ecs';
 import { Level } from '../levels/level';
+import { MessageEnum } from '../message';
 import { Box } from '../objects/box';
 import { Vector } from '../types/common';
 import { addBoxGraphics, removeBoxGraphics } from '../utils/boxGraphics';
@@ -30,11 +31,11 @@ export class GravityBoxController extends ECS.Component {
     }
 
     onInit() {
-        this.subscribe("changedGravity")
+        this.subscribe(MessageEnum.CHANGE_GRAVITY)
     }
 
     onMessage(msg: ECS.Message) {
-        if(msg.action === "changedGravity") {
+        if(msg.action === MessageEnum.CHANGE_GRAVITY) {
             const collision = Matter.SAT.collides(this.box.body, this.playerBody)
             console.log(collision.collided)
             if(collision.collided) {
@@ -72,7 +73,7 @@ export class GravityBoxController extends ECS.Component {
         if(!this.active && collision.collided && collision.normal.y < 0) {
             if(this.counter >= this.threshold) {
                 this.activate()
-                this.sendMessage("changedGravity")
+                this.sendMessage(MessageEnum.CHANGE_GRAVITY)
             } else {
                 this.counter += 1
             }

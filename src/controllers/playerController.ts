@@ -8,6 +8,7 @@ import PositionQueue from '../utils/positionQueue';
 import { Resolution } from '../types/common';
 import { Level } from '../levels/level';
 import { KeyboardController } from './keyboardController';
+import { MessageEnum } from '../message';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body
@@ -29,7 +30,7 @@ export class PlayerController extends ECS.Component {
 	}
 
 	onInit(): void {
-		this.subscribe("changelevelnext", "changelevelprev")
+		this.subscribe(MessageEnum.CHANGE_LEVEL_NEXT, MessageEnum.CHANGE_LEVEL_PREV)
 	}
 
 	calcMoveSpeed(delta: number) {
@@ -104,12 +105,12 @@ export class PlayerController extends ECS.Component {
 	}
 
 	onMessage(msg: ECS.Message) {
-		if(msg.action === "changelevelnext") {
+		if(msg.action === MessageEnum.CHANGE_LEVEL_NEXT) {
 			Matter.Body.setPosition(this.playerBody, {
 				x: this.playerBody.position.x,
 				y: this.playerBody.position.y + this.resolution.height
 			})
-		} else if(msg.action === "changelevelprev") {
+		} else if(msg.action === MessageEnum.CHANGE_LEVEL_PREV) {
 			Matter.Body.setPosition(this.playerBody, {
 				x: this.playerBody.position.x,
 				y: this.playerBody.position.y - this.resolution.height
@@ -120,10 +121,10 @@ export class PlayerController extends ECS.Component {
 	updateLevel() {
 		//Update to next level
 		if(this.playerBody.position.y < 0) {
-			this.sendMessage("nextlevel")
+			this.sendMessage(MessageEnum.NEXT_LEVEL)
 		}
 		if(this.playerBody.bounds.min.y > this.resolution.height) {
-			this.sendMessage("prevlevel")
+			this.sendMessage(MessageEnum.PREV_LEVEL)
 		}
 	}
 

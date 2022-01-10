@@ -13,6 +13,7 @@ import pixiSound from "pixi-sound";
 import { IntroController } from "./controllers/introController";
 import { OutroStages } from "./types/scenes";
 import { OutroController } from "./controllers/outroController";
+import { MessageEnum } from "./message";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;
@@ -32,11 +33,11 @@ export class GameManager extends ECS.Component {
     }
 
     onInit(): void {
-        this.subscribe("nextlevel", "prevlevel", "finishgame", "introdone", "outrofadeout")
+        this.subscribe(MessageEnum.NEXT_LEVEL, MessageEnum.PREV_LEVEL, MessageEnum.FINISH_GAME, MessageEnum.INTRO_DONE, MessageEnum.OUTRO_FADE_OUT)
     }
 
     onMessage(msg: ECS.Message) {
-        if(msg.action == "nextlevel") {
+        if(msg.action == MessageEnum.NEXT_LEVEL) {
             const level: Level = this.engine.scene.getGlobalAttribute("level")
             const nextLevel = level.getNextLevel()
             if(nextLevel == null) return
@@ -46,8 +47,8 @@ export class GameManager extends ECS.Component {
             this.boxes = this.initBoxes()
             this.resetWorldParams()
 
-            this.sendMessage("changelevelnext")
-        } else if(msg.action == "prevlevel") {
+            this.sendMessage(MessageEnum.CHANGE_LEVEL_NEXT)
+        } else if(msg.action === MessageEnum.PREV_LEVEL) {
             const level: Level = this.engine.scene.getGlobalAttribute("level")
             const prevLevel = level.getPrevLevel()
             if(prevLevel == null) return
@@ -57,12 +58,12 @@ export class GameManager extends ECS.Component {
             this.boxes = this.initBoxes()
             this.resetWorldParams()
 
-            this.sendMessage("changelevelprev")
-        } else if(msg.action == "finishgame") {
+            this.sendMessage(MessageEnum.CHANGE_LEVEL_PREV)
+        } else if(msg.action === MessageEnum.FINISH_GAME) {
             this.finishGame()
-        } else if(msg.action == "introdone") {
+        } else if(msg.action === MessageEnum.INTRO_DONE) {
             this.initializeGame()
-        } else if(msg.action == "outrofadeout") {
+        } else if(msg.action === MessageEnum.OUTRO_FADE_OUT) {
             this.initializeGame()
         }
     }
