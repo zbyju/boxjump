@@ -13,6 +13,8 @@
 - compilation test: run `npm run compile-test` to see if there are any TypeScript errors. The default building process provided by ParcelJS doesn't check for syntactic errors. Instead, it just skips them. Yet, you should be able to see them underlined in your IDE
 - deployment: run `npm run deploy` and find your project in the `build` folder
 
+![Architecture](./diagram.png)
+
 ## Project structure
 
 ```
@@ -33,7 +35,7 @@ project
 │   │   utils.js            // various file utilities
 │
 └───src                     // source files of your project
-│   │   index.ts          // the main source file that is included in the html file
+│   │   index.ts            // the main source file that is included in the html file
 │
 └───view                    // folder with HTML content
 │   │   index.html          // file that includes TS file with your game
