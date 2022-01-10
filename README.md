@@ -6,9 +6,11 @@ This game is available online at: [https://box-jump-aph.herokuapp.com/](https://
 
 Controls:
 
-`A` - Move Left
-`D` - Move Right
-`Space` + `A`/`D` - Jump Left/Right
+- `A` - Move Left
+
+- `D` - Move Right
+
+- `Space` + `A`/`D` - Jump Left/Right
 
 The more you hold the jump button, the higher you jump.
 
