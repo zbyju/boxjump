@@ -8,6 +8,7 @@ import PositionQueue from '../utils/positionQueue';
 import { Resolution } from '../types/common';
 import { Level } from '../levels/level';
 import { dateDifferenceInSeconds } from '../utils/date';
+import { KeyboardController } from './keyboardController';
 
 export class CheatingController extends ECS.Component {
 	playerBody: Matter.Body
@@ -23,25 +24,25 @@ export class CheatingController extends ECS.Component {
 	}
 
 	updateState(delta: number) {
-        const keyInputComponent = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name)
+        const keyController = new KeyboardController(this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name))
         if(dateDifferenceInSeconds(this.lastTeleport, new Date()) > this.threshold) {
-            if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_P)) {
+            if(keyController.shouldTeleportEnd()) {
                 const level: Level = this.scene.getGlobalAttribute("level")
                 Matter.Body.setPosition(this.playerBody, {x: level.playerEnd.width, y: level.playerEnd.height})
                 this.lastTeleport = new Date()
             }
-            if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_L)) {
+            if(keyController.shouldTeleportStart()) {
                 const level: Level = this.scene.getGlobalAttribute("level")
                 Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
                 this.lastTeleport = new Date()
             }
-            if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_O)) {
+            if(keyController.shouldTeleportNextLevel()) {
                 this.sendMessage("nextlevel")
                 const level: Level = this.scene.getGlobalAttribute("level")
                 Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})
                 this.lastTeleport = new Date()
             }
-            if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_K)) {
+            if(keyController.shouldTeleportPreviousLevel()) {
                 this.sendMessage("prevlevel")
                 const level: Level = this.scene.getGlobalAttribute("level")
                 Matter.Body.setPosition(this.playerBody, {x: level.playerStart.width, y: level.playerStart.height})

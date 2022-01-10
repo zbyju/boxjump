@@ -7,6 +7,7 @@ import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
 import PositionQueue from '../utils/positionQueue';
 import { Resolution } from '../types/common';
 import { Level } from '../levels/level';
+import { KeyboardController } from './keyboardController';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body
@@ -61,10 +62,10 @@ export class PlayerController extends ECS.Component {
 		}
 		
 		if(this.positionQueue.getMaxDifferenceY() <= 0.1) {
-			const keyInputComponent = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name)
+			const keyController = new KeyboardController(this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name))
 			if(this.playerState !== PlayerState.JUMPING) {
 				let isAction = false
-				if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_SPACE)) {
+				if(keyController.shouldJump()) {
 					this.playerJump = getDefaultJump()
 					this.playerState = PlayerState.JUMPING
 					this.playerJump.jumpStart = Date.now()
@@ -72,12 +73,12 @@ export class PlayerController extends ECS.Component {
 				}
 
 				if(this.playerState !== PlayerState.JUMPING) {
-					if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT)) {
+					if(keyController.shouldMoveRight()) {
 						this.playerState = PlayerState.RUNNING_RIGHT
 						this.moveRight(delta)
 						isAction = true
 					}
-					if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_LEFT)) {
+					if(keyController.shouldMoveLeft()) {
 						this.playerState = PlayerState.RUNNING_LEFT
 						this.moveLeft(delta)
 						isAction = true
@@ -87,13 +88,11 @@ export class PlayerController extends ECS.Component {
 					}
 				}
 			}
-			if(this.playerState === PlayerState.JUMPING && !keyInputComponent.isKeyPressed(ECS.Keys.KEY_SPACE)) {
-				if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT) &&
-				   !keyInputComponent.isKeyPressed(ECS.Keys.KEY_LEFT)) {
+			if(this.playerState === PlayerState.JUMPING && !keyController.shouldJump()) {
+				if(keyController.shouldJumpRight()) {
 					this.playerJump.jumpDirection = JumpDirection.RIGHT
 				}
-				else if(keyInputComponent.isKeyPressed(ECS.Keys.KEY_LEFT) &&
-						!keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT)) {
+				else if(keyController.shouldJumpLeft()) {
 					this.playerJump.jumpDirection = JumpDirection.LEFT
 				} else {
 					this.playerJump.jumpDirection= JumpDirection.UP
