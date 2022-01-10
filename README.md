@@ -1,8 +1,20 @@
 # APHGames template for PIXIJS and ECSLite library
 
-## Online
+## About
 
 This game is available online at: [https://box-jump-aph.herokuapp.com/](https://box-jump-aph.herokuapp.com/)
+
+Controls:
+
+`A` - Move Left
+`D` - Move Right
+`Space` + `A`/`D` - Jump Left/Right
+
+The more you hold the jump button, the higher you jump.
+
+**Try to get to the top!**
+
+*(You can also cheat by clicking `O`, `K`, `P`, `L`)*
 
 ## How to run this project
 - the project is powered by ParcelJS, TypeScript, PixiJS and ECSLite libraries
