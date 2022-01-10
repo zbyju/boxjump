@@ -1,5 +1,9 @@
 # APHGames template for PIXIJS and ECSLite library
 
+## Online
+
+This game is available online at: [https://box-jump-aph.herokuapp.com/](https://box-jump-aph.herokuapp.com/)
+
 ## How to run this project
 - the project is powered by ParcelJS, TypeScript, PixiJS and ECSLite libraries
 - install [NodeJS](https://nodejs.org/en/download/)
