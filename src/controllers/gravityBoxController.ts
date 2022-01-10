@@ -37,7 +37,6 @@ export class GravityBoxController extends ECS.Component {
     onMessage(msg: ECS.Message) {
         if(msg.action === MessageEnum.CHANGE_GRAVITY) {
             const collision = Matter.SAT.collides(this.box.body, this.playerBody)
-            console.log(collision.collided)
             if(collision.collided) {
                 this.activate()
             } else {
