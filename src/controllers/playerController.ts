@@ -29,7 +29,7 @@ export class PlayerController extends ECS.Component {
 	}
 
 	onInit(): void {
-		this.subscribe(MessageEnum.CHANGE_LEVEL_NEXT, MessageEnum.CHANGE_LEVEL_PREV)
+		this.subscribe(MessageEnum.CHANGE_LEVEL_NEXT, MessageEnum.CHANGE_LEVEL_PREV, MessageEnum.FINISH_GAME)
 	}
 
 	calcMoveSpeed(delta: number) {
@@ -114,6 +114,8 @@ export class PlayerController extends ECS.Component {
 				x: this.playerBody.position.x,
 				y: this.playerBody.position.y - this.resolution.height
 			})
+		} else if(msg.action === MessageEnum.FINISH_GAME) {
+			this.finish()
 		}
 	}
 
