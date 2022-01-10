@@ -20,11 +20,6 @@ class ProjectJumper {
 			height: canvas.height,
 		});
 
-		this.engine.app.loader
-			.reset()
-			.add('ghost', 'assets/ghost.png')
-			.load(() => this.onAssetsLoaded());
-
 		this.binder.init(this.engine.scene, {
 			mouseControl: false,
 			renderConstraints: false,
@@ -35,6 +30,9 @@ class ProjectJumper {
 		this.binder.mEngine.gravity.y = GRAVITY_Y
 		// @ts-ignore - Resolver exists, not defined in TS - this fixes walls being "sticky"
 		Matter.Resolver._restingThresh = 0.001;
+
+
+		this.onAssetsLoaded()
 	}
 
 	onAssetsLoaded() {
