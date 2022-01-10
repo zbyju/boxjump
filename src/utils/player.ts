@@ -1,4 +1,4 @@
-import { PlayerJump } from "../types/player"
+import { PlayerJump } from "../types/player";
 
 function easeInQuad(x: number): number {
     return x * x;

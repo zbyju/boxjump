@@ -1,11 +1,8 @@
-import * as ECS from '../libs/pixi-ecs';
-import * as PIXI from 'pixi.js';
 import Matter from 'matter-js';
-import * as PixiMatter from '../libs/pixi-matter'
-import { interactiveTarget } from 'pixi.js';
-import { PlayerController } from './controllers/playerController';
-import { GameManager } from './gameManager';
+import * as ECS from '../libs/pixi-ecs';
+import * as PixiMatter from '../libs/pixi-matter';
 import { GRAVITY_X, GRAVITY_Y } from './constants';
+import { GameManager } from './gameManager';
 
 class ProjectJumper {
 	engine: ECS.Engine;

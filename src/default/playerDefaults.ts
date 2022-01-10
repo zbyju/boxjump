@@ -1,5 +1,5 @@
 import { IChamferableBodyDefinition } from "matter-js"
-import { PLAYER_DENSITY, PLAYER_RESTITUTION, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_FRICTION_STATIC, PLAYER_INERTIA, PLAYER_WIDTH, PLAYER_HEIGHT } from "../constants"
+import { PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_FRICTION_STATIC, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH } from "../constants"
 import { Size } from "../types/common"
 import { JumpDirection, PlayerJump } from "../types/player"
 

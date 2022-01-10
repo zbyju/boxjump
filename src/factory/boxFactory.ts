@@ -1,7 +1,5 @@
-import Matter, { IChamferableBodyDefinition } from "matter-js";
+import { IChamferableBodyDefinition } from "matter-js";
 import { WALL_WIDTH } from "../constants";
-import { getDefaultBoxOptions } from "../default/boxDefaults";
-import { Box } from "../objects/box";
 import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { FinishBoxBodyWrapper } from "../objects/finishBoxBodyWrapper";
 import { GravityBoxBodyWrapper } from "../objects/gravityBoxBodyWrapper";

@@ -1,10 +1,9 @@
-import Matter, { IChamferableBodyDefinition } from "matter-js";
+import Matter from "matter-js";
 import * as ECS from '../../libs/pixi-ecs';
 import { CHEATING, PLAYER_HEIGHT, PLAYER_WIDTH } from "../constants";
 import { CheatingController } from "../controllers/cheatingController";
 import { PlayerController } from "../controllers/playerController";
-import { getDefaultPlayerOptions, getDefaultPlayerSize } from "../default/playerDefaults";
-import { Coordinates, Resolution, Size } from "../types/common";
+import { Resolution } from "../types/common";
 
 export class Player {
     body: Matter.Body

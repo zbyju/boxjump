@@ -1,8 +1,8 @@
 import * as ECS from '../../libs/pixi-ecs';
-import { Resolution } from '../types/common';
-import { dateDifferenceInSeconds } from '../utils/date';
-import { Cover, OPAQUE, OutroStages, TRANSPARENT } from '../types/scenes';
 import { MessageEnum } from '../message';
+import { Resolution } from '../types/common';
+import { Cover, OPAQUE, OutroStages, TRANSPARENT } from '../types/scenes';
+import { dateDifferenceInSeconds } from '../utils/date';
 
 export class OutroController extends ECS.Component {
     scene: ECS.Scene

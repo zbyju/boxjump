@@ -1,10 +1,9 @@
 import Matter from "matter-js";
-import { MatterBody } from "../../libs/pixi-matter";
+import * as ECS from '../../libs/pixi-ecs';
 import { Size, Vector } from "../types/common";
 import { Box } from "./box";
 import { BoxBodyWrapper } from "./boxBodyWrapper";
 import { GravityBox } from "./gravityBox";
-import * as ECS from '../../libs/pixi-ecs';
 
 export class GravityBoxBodyWrapper extends BoxBodyWrapper {
     gravity: Vector

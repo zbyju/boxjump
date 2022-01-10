@@ -1,8 +1,5 @@
-import { Body } from "matter-js";
-import { BoxFactory } from "../factory/boxFactory";
 import { BoxLeftFactory } from "../factory/boxLeftFactory";
 import { BoxRightFactory } from "../factory/boxRightFactory";
-import { Box } from "../objects/box";
 import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { Resolution } from "../types/common";
 import { Level } from "./level";

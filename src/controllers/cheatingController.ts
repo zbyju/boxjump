@@ -1,15 +1,10 @@
-import * as ECS from '../../libs/pixi-ecs';
 import Matter from 'matter-js';
-import { JumpDirection, PlayerJump, PlayerState } from '../types/player'
-import { getDefaultJump } from '../default/playerDefaults';
-import { calculateJumpPower } from '../utils/player';
-import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
-import PositionQueue from '../utils/positionQueue';
-import { Resolution } from '../types/common';
+import * as ECS from '../../libs/pixi-ecs';
 import { Level } from '../levels/level';
+import { MessageEnum } from '../message';
+import { Resolution } from '../types/common';
 import { dateDifferenceInSeconds } from '../utils/date';
 import { KeyboardController } from './keyboardController';
-import { MessageEnum } from '../message';
 
 export class CheatingController extends ECS.Component {
 	playerBody: Matter.Body

@@ -2,7 +2,7 @@ import Matter from "matter-js";
 import * as ECS from '../../libs/pixi-ecs';
 import { MatterBind } from "../../libs/pixi-matter";
 import { GravityBoxController } from "../controllers/gravityBoxController";
-import { Coordinates, Size, Vector } from "../types/common";
+import { Vector } from "../types/common";
 import { Box } from "./box";
 import { BoxBodyWrapper } from "./boxBodyWrapper";
 

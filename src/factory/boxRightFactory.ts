@@ -1,7 +1,5 @@
 import Matter, { IChamferableBodyDefinition } from "matter-js";
-import { WALL_WIDTH } from "../constants";
 import { getDefaultBoxOptions } from "../default/boxDefaults";
-import { Box } from "../objects/box";
 import { BoxBodyWrapper } from "../objects/boxBodyWrapper";
 import { Resolution } from "../types/common";
 import { coordinatesFromRightCornerToCenter } from "../utils/common";

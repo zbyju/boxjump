@@ -1,7 +1,6 @@
 import Matter from "matter-js";
-import { MatterBody } from "../../libs/pixi-matter";
-import { Size } from "../types/common";
 import * as ECS from '../../libs/pixi-ecs';
+import { Size } from "../types/common";
 import { Box } from "./box";
 
 export class BoxBodyWrapper {

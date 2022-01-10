@@ -1,19 +1,16 @@
-import { GameFactory } from "./factory"
-import * as ECS from '../libs/pixi-ecs';
-import * as PixiMatter from '../libs/pixi-matter'
-import { getResolutionFromEngine } from "./utils/common";
-import { Level1 } from "./levels/level1";
 import Matter from "matter-js";
-import { Level } from "./levels/level";
-import { Level2 } from "./levels/level2";
-import { Box } from "./objects/box";
+import * as ECS from '../libs/pixi-ecs';
+import * as PixiMatter from '../libs/pixi-matter';
 import { GRAVITY_X, GRAVITY_Y } from "./constants";
-import { Player } from "./objects/player";
-import pixiSound from "pixi-sound";
 import { IntroController } from "./controllers/introController";
-import { OutroStages } from "./types/scenes";
 import { OutroController } from "./controllers/outroController";
+import { GameFactory } from "./factory";
+import { Level } from "./levels/level";
+import { Level1 } from "./levels/level1";
 import { MessageEnum } from "./message";
+import { Box } from "./objects/box";
+import { Player } from "./objects/player";
+import { getResolutionFromEngine } from "./utils/common";
 
 export class GameManager extends ECS.Component {
     engine: ECS.Engine;

@@ -1,16 +1,12 @@
-import * as PixiMatter from '../libs/pixi-matter'
-import { Resolution } from './types/common'
 import Matter, { IChamferableBodyDefinition } from 'matter-js';
 import * as ECS from '../libs/pixi-ecs';
-import { PlayerController } from './controllers/playerController';
-import { CHEATING, GROUND_FRICTION, GROUND_RESTITUION, GROUND_WIDTH, PLAYER_DENSITY, PLAYER_FRICTION, PLAYER_FRICTION_AIR, PLAYER_FRICTION_STATIC, PLAYER_HEIGHT, PLAYER_INERTIA, PLAYER_RESTITUTION, PLAYER_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
-import { Level } from './levels/level';
-import { BoxController } from './controllers/boxController';
-import { Box } from './objects/box';
-import { CheatingController } from './controllers/cheatingController';
-import { Player } from './objects/player';
+import * as PixiMatter from '../libs/pixi-matter';
+import { GROUND_WIDTH, WALL_FRICTION, WALL_RESTITUTION, WALL_WIDTH } from './constants';
 import { getDefaultPlayerOptions, getDefaultPlayerSize } from './default/playerDefaults';
-import { getDefaultBoxOptions } from './default/boxDefaults';
+import { Level } from './levels/level';
+import { Box } from './objects/box';
+import { Player } from './objects/player';
+import { Resolution } from './types/common';
 
 export class GameFactory {
     binder: PixiMatter.MatterBind

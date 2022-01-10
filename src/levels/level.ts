@@ -1,5 +1,3 @@
-import Matter from "matter-js"
-import { Box } from "../objects/box"
 import { BoxBodyWrapper } from "../objects/boxBodyWrapper"
 import { Resolution } from "../types/common"
 

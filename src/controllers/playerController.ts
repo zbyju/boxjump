@@ -1,14 +1,13 @@
-import * as ECS from '../../libs/pixi-ecs';
 import Matter from 'matter-js';
-import { JumpDirection, PlayerJump, PlayerState } from '../types/player'
-import { getDefaultJump } from '../default/playerDefaults';
-import { calculateJumpPower } from '../utils/player';
+import * as ECS from '../../libs/pixi-ecs';
 import { JUMP_POWER, JUMP_X, JUMP_Y, MOVE_SPEED, SPEED } from '../constants';
-import PositionQueue from '../utils/positionQueue';
-import { Resolution } from '../types/common';
-import { Level } from '../levels/level';
-import { KeyboardController } from './keyboardController';
+import { getDefaultJump } from '../default/playerDefaults';
 import { MessageEnum } from '../message';
+import { Resolution } from '../types/common';
+import { JumpDirection, PlayerJump, PlayerState } from '../types/player';
+import { calculateJumpPower } from '../utils/player';
+import PositionQueue from '../utils/positionQueue';
+import { KeyboardController } from './keyboardController';
 
 export class PlayerController extends ECS.Component {
 	playerBody: Matter.Body

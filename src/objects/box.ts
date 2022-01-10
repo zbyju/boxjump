@@ -1,9 +1,9 @@
-import * as PixiMatter from '../../libs/pixi-matter'
 import Matter from "matter-js";
 import * as ECS from '../../libs/pixi-ecs';
+import * as PixiMatter from '../../libs/pixi-matter';
+import { BoxController } from '../controllers/boxController';
 import { Coordinates, Size } from "../types/common";
 import { BoxBodyWrapper } from "./boxBodyWrapper";
-import { BoxController } from '../controllers/boxController';
 
 export class Box {
     group: string
