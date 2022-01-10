@@ -8,11 +8,11 @@ export class KeyboardController {
     }
 
     shouldMoveRight() {
-        return this.keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT)
+        return this.keyInputComponent.isKeyPressed(ECS.Keys.KEY_RIGHT) || this.keyInputComponent.isKeyPressed(ECS.Keys.KEY_D)
     }
 
     shouldMoveLeft() {
-        return this.keyInputComponent.isKeyPressed(ECS.Keys.KEY_LEFT)
+        return this.keyInputComponent.isKeyPressed(ECS.Keys.KEY_LEFT) || this.keyInputComponent.isKeyPressed(ECS.Keys.KEY_A)
     }
 
     shouldJump() {
